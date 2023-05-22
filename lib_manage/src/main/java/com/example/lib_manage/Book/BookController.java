@@ -27,14 +27,6 @@ import java.util.List;
             return BookRepository.save(book);
         }
 
-//        @PutMapping("/{id}/quantity")
-//        public Book updateBookQuantity(@PathVariable Long id, @RequestParam int quantity) {
-//            Book book = BookRepository.findById(id)
-//                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
-//
-//            book.setQuantity(quantity);
-//            return BookRepository.save(book);
-//        }
         @PutMapping("/{id}/quantity/{quantity}")
         public Book updateBookQuantity(@PathVariable Long id, @PathVariable int quantity) {
         Book book = BookRepository.findById(id)
@@ -43,7 +35,14 @@ import java.util.List;
         book.setQuantity(quantity);
         return BookRepository.save(book);
 }
+    @PutMapping("/{id}/author/{author}")
+    public Book updateBookQuantity(@PathVariable Long id, @PathVariable String author) {
+        Book book = BookRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 
+        book.setAuthor(author);
+        return BookRepository.save(book);
+    }
         @DeleteMapping("/{id}")
         public void deleteBook(@PathVariable Long id) {
             Book book = BookRepository.findById(id)
