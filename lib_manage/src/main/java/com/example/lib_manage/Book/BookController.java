@@ -35,13 +35,13 @@ import java.util.List;
 //            book.setQuantity(quantity);
 //            return BookRepository.save(book);
 //        }
-@PutMapping("/{id}/quantity/{quantity}")
-public Book updateBookQuantity(@PathVariable Long id, @PathVariable int quantity) {
-    Book book = BookRepository.findById(id)
+        @PutMapping("/{id}/quantity/{quantity}")
+        public Book updateBookQuantity(@PathVariable Long id, @PathVariable int quantity) {
+        Book book = BookRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 
-    book.setQuantity(quantity);
-    return BookRepository.save(book);
+        book.setQuantity(quantity);
+        return BookRepository.save(book);
 }
 
         @DeleteMapping("/{id}")
