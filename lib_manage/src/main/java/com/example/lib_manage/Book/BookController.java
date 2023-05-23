@@ -39,7 +39,6 @@ import java.util.List;
     public Book updateBookQuantity(@PathVariable Long id, @PathVariable String author) {
         Book book = BookRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
-
         book.setAuthor(author);
         return BookRepository.save(book);
     }
