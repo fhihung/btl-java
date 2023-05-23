@@ -17,11 +17,11 @@ public class Borrow {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = true)
-    private Book book;
+    Book book;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "borrower_id", nullable = true)
-    private Borrower borrower;
+    Borrower borrower;
 
     @Column(nullable = true)
     private LocalDate borrowDate;

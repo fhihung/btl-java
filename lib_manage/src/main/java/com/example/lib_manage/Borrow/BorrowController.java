@@ -9,10 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
+//import static com.example.lib_manage.Book.BookController.BookRepository;
 
 @RestController
 @RequestMapping(path = "/borrows")
 public class BorrowController {
+    @Autowired
+    private com.example.lib_manage.Book.BookRepository BookRepository;
     @Autowired
     private com.example.lib_manage.Borrow.BorrowRepository BorrowRepository;
     @GetMapping
@@ -25,9 +30,30 @@ public class BorrowController {
 //        Borrow createdBorrow = BorrowRepository.save(borrow);
 //        return new ResponseEntity<>(createdBorrow, HttpStatus.CREATED);
 //    }
-        @PostMapping("/addBorrow")
-        public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
-            return BorrowRepository.save(borrow);
+@PostMapping("/addBorrow")
+public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
+    Book book = borrow.getBook();
+
+    if (book != null) {
+        Long bookId = book.getId();
+        Optional<Book> optionalBook = BookRepository.findById(bookId);
+
+        if (optionalBook.isPresent()) {
+            Book existingBook = optionalBook.get();
+            int quantity = existingBook.getQuantity();
+
+            if (quantity == 0) {
+                throw new IllegalArgumentException("Out of stock");
+            }
+
+            existingBook.setQuantity(quantity - 1);
+            BookRepository.save(existingBook);
+        } else {
+            throw new IllegalArgumentException("Book not found");
+        }
+    }
+
+    return BorrowRepository.save(borrow);
 }
 }
 //    @GetMapping("/{id}")
