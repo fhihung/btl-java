@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,30 @@ public class BorrowController {
                 BookRepository.save(existingBook);
             }
         }
+        return BorrowRepository.save(borrow);
+    }
+    @PutMapping("/{id}/borrowDate/{borrowDate}")
+    public Borrow updateBorrowDate(@PathVariable Long id, @PathVariable LocalDate borrowDate) {
+        Borrow borrow = BorrowRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
+        borrow.setBorrowDate(borrowDate);
+        return BorrowRepository.save(borrow);
+    }
+    @PutMapping("/{id}/dueDate/{dueDate}")
+    public Borrow updateDueDate(@PathVariable Long id, @PathVariable LocalDate dueDate) {
+        Borrow borrow = BorrowRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
+        borrow.setDueDate(dueDate);
+        return BorrowRepository.save(borrow);
+    }
+    @PutMapping("/{id}/returnDate/{returnDate}")
+    public Borrow updateReturnDate(@PathVariable Long id, @PathVariable LocalDate returnDate) {
+        Borrow borrow = BorrowRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
+        borrow.setReturnDate(returnDate);
         return BorrowRepository.save(borrow);
     }
 }

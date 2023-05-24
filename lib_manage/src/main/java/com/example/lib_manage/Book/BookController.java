@@ -17,29 +17,52 @@ import java.util.List;
     public List<Book> getBooks() {
         return BookRepository.findAll();
     }
-        @GetMapping("/{id}")
+        @GetMapping("/{id}")//hien thongtin voi muc tim kiem id
         public Book getBookById(@PathVariable Long id) {
             return BookRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
         }
-        @PostMapping("/add")
+        @PostMapping("/add")//them du lieu
         public Book addBook(@RequestBody @Valid Book book) {
             return BookRepository.save(book);
         }
 
-        @PutMapping("/{id}/quantity/{quantity}")
+        @PutMapping("/{id}/quantity/{quantity}")//sua quatity
         public Book updateBookQuantity(@PathVariable Long id, @PathVariable int quantity) {
-        Book book = BookRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+            Book book = BookRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 
-        book.setQuantity(quantity);
+            book.setQuantity(quantity);
+            return BookRepository.save(book);
+        }
+    @PutMapping("/{id}/publicationYear/{publicationYear}")//sua publicationYear
+    public Book updateBookPublicationYear(@PathVariable Long id, @PathVariable int publicationYear) {
+        Book book = BookRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
+        book.setPublicationYear(publicationYear);
         return BookRepository.save(book);
-}
-    @PutMapping("/{id}/author/{author}")
-    public Book updateBookQuantity(@PathVariable Long id, @PathVariable String author) {
+    }
+        @PutMapping("/{id}/title/{title}") // sua title
+        public Book updateBookTitle(@PathVariable Long id, @PathVariable String title) {
+            Book book = BookRepository.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
+            book.setTitle(title);
+            return BookRepository.save(book);
+    }
+    @PutMapping("/{id}/author/{author}") // sua author
+    public Book updateBookAuthor(@PathVariable Long id, @PathVariable String author) {
         Book book = BookRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
         book.setAuthor(author);
+        return BookRepository.save(book);
+    }
+    @PutMapping("/{id}/publisher/{publisher}")//sua publisher
+    public Book updateBookPublisher(@PathVariable Long id, @PathVariable String publisher) {
+        Book book = BookRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+        book.setPublisher(publisher);
         return BookRepository.save(book);
     }
         @DeleteMapping("/{id}")
