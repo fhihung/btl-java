@@ -30,8 +30,8 @@ public class BorrowController {
 //        Borrow createdBorrow = BorrowRepository.save(borrow);
 //        return new ResponseEntity<>(createdBorrow, HttpStatus.CREATED);
 //    }
-@PostMapping("/addBorrow")
-public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
+    @PostMapping("/addBorrow")
+    public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
     Book book = borrow.getBook();
 
     if (book != null) {

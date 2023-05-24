@@ -17,6 +17,10 @@ import java.util.List;
     public List<Book> getBooks() {
         return BookRepository.findAll();
     }
+    @GetMapping("/count")
+    public Long getBookCount() {
+        return BookRepository.count();
+    }
         @GetMapping("/{id}")
         public Book getBookById(@PathVariable Long id) {
             return BookRepository.findById(id)

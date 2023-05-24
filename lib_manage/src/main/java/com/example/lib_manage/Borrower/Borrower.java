@@ -28,8 +28,8 @@ public class Borrower {
     @Column(nullable = false)
     private LocalDate cardExpirationDate;
 
-    @Column(nullable = false)
-    private int numberOfBooksBorrowed;
+//    @Column(nullable = false)
+//    private int numberOfBooksBorrowed;
 
     // Getters and setters
 
@@ -81,11 +81,11 @@ public class Borrower {
         this.cardExpirationDate = cardExpirationDate;
     }
 
-    public int getNumberOfBooksBorrowed() {
-        return numberOfBooksBorrowed;
-    }
-
-    public void setNumberOfBooksBorrowed(int numberOfBooksBorrowed) {
-        this.numberOfBooksBorrowed = numberOfBooksBorrowed;
-    }
+//    public int getNumberOfBooksBorrowed() {
+//        return numberOfBooksBorrowed;
+//    }
+//
+//    public void setNumberOfBooksBorrowed(int numberOfBooksBorrowed) {
+//        this.numberOfBooksBorrowed = numberOfBooksBorrowed;
+//    }
 }
