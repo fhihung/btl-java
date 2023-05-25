@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.6
   provider: ^6.0.5
+  sidebarx: ^0.15.0
+  separated_row: ^2.0.0
 
 dev_dependencies:
   flutter_test:
