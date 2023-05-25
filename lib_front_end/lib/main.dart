@@ -42,7 +42,14 @@ class SidebarXExampleApp extends StatelessWidget {
             key: _key,
             appBar: isSmallScreen
                 ? AppBar(
-                    backgroundColor: canvasColor,
+                    shape: Border(
+                        // bottom: BorderSide(
+                        //   color: Colors.grey, // Màu sắc của đường viền
+                        //   width: 1.0, // Độ dày của đường viền
+                        // ),
+                        ),
+                    elevation: 1,
+                    backgroundColor: white,
                     leading: IconButton(
                       onPressed: () {
                         // if (!Platform.isAndroid && !Platform.isIOS) {
@@ -50,7 +57,10 @@ class SidebarXExampleApp extends StatelessWidget {
                         // }
                         _key.currentState?.openDrawer();
                       },
-                      icon: const Icon(Icons.menu),
+                      icon: const Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                      ),
                     ),
                   )
                 : null,

@@ -21,19 +21,18 @@ class ExampleSidebarX extends StatelessWidget {
     return SidebarX(
       controller: _controller,
       theme: SidebarXTheme(
-        margin: const EdgeInsets.all(10),
+        margin: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: canvasColor,
+          color: white,
           borderRadius: BorderRadius.circular(20),
         ),
-        hoverColor: scaffoldBackgroundColor,
-        textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+        hoverColor: Colors.black.withOpacity(0.2),
+        textStyle: TextStyle(color: canvasColor.withOpacity(0.7)),
         selectedTextStyle: const TextStyle(color: Colors.white),
         itemTextPadding: const EdgeInsets.only(left: 30),
         selectedItemTextPadding: const EdgeInsets.only(left: 30),
         itemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: canvasColor),
         ),
         selectedItemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -44,25 +43,27 @@ class ExampleSidebarX extends StatelessWidget {
             colors: [accentCanvasColor, canvasColor],
           ),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.28),
-              blurRadius: 30,
-            )
+            // BoxShadow(
+            //     color: Colors.black.withOpacity(0.28),
+            //     blurRadius: 30,
+            //  )
           ],
         ),
         iconTheme: IconThemeData(
-          color: Colors.white.withOpacity(0.7),
+          color: canvasColor.withOpacity(0.7),
           size: 20,
         ),
         selectedIconTheme: const IconThemeData(
-          color: Colors.white,
+          color: white,
           size: 20,
         ),
       ),
-      extendedTheme: const SidebarXTheme(
+      extendedTheme: SidebarXTheme(
+        margin: EdgeInsets.all(10),
         width: 200,
         decoration: BoxDecoration(
-          color: canvasColor,
+          borderRadius: BorderRadius.circular(20),
+          color: white,
         ),
       ),
       footerDivider: divider,
@@ -89,7 +90,7 @@ class ExampleSidebarX extends StatelessWidget {
           label: 'Favorites',
         ),
         const SidebarXItem(
-          iconWidget: FlutterLogo(size: 20),
+          icon: Icons.local_activity,
           label: 'Flutter',
         ),
       ],
