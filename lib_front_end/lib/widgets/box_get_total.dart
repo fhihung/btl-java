@@ -39,7 +39,7 @@ class GetTotalContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      count.toString(),
+                      '${count}',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

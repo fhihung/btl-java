@@ -11,23 +11,26 @@ import java.time.LocalDate;
 public class BorrowerController {
     @Autowired
     private BorrowerRepository BorrowerRepository;
-
-    @PostMapping
+    @GetMapping("/count") // Lay so luong nguoi muon
+    public Long getBorrowerCount() {
+        return BorrowerRepository.count();
+    }
+    @PostMapping("/add") // Them nguoi muon
     public Borrower addBorrower(@RequestBody Borrower borrower) {
         return BorrowerRepository.save(borrower);
     }
-    @GetMapping("/{id}")//hien thongtin voi muc tim kiem id
+    @GetMapping("/{id}") // Lay thong tin nguoi muon theo id
     public Borrower getBorrowerById(@PathVariable Long id) {
         return BorrowerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
     }
-    @DeleteMapping("/delete/{id}")//xoa
+    @DeleteMapping("/delete/{id}") //Xoa nguoi muon
     public void deleteBorrower(@PathVariable Long id) {
         Borrower borrower = BorrowerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Borrower not found"));
         BorrowerRepository.delete(borrower);
     }
-    @PutMapping("/{id}/fullName/{fullName}")
+    @PutMapping("/{id}/fullName/{fullName}") //Doi ten nguoi muon
     public Borrower updateBorrowerFullName(@PathVariable Long id, @PathVariable String fullName) {
         Borrower borrower = BorrowerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
@@ -35,7 +38,7 @@ public class BorrowerController {
         borrower.setFullName(fullName);
         return BorrowerRepository.save(borrower);
     }
-    @PutMapping("/{id}/address/{address}")
+    @PutMapping("/{id}/address/{address}") // Doi dia chi nguoi muon
     public Borrower updateBorrowerAddress(@PathVariable Long id, @PathVariable String address) {
         Borrower borrower = BorrowerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
@@ -43,7 +46,7 @@ public class BorrowerController {
         borrower.setAddress(address);
         return BorrowerRepository.save(borrower);
     }
-    @PutMapping("/{id}/phoneNumber/{phoneNumber}")
+    @PutMapping("/{id}/phoneNumber/{phoneNumber}") // Thay doi sdt nguoi muon
     public Borrower updateBorrowerPhoneNumber(@PathVariable Long id, @PathVariable String phoneNumber) {
         Borrower borrower = BorrowerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
@@ -51,20 +54,12 @@ public class BorrowerController {
         borrower.setPhoneNumber(phoneNumber);
         return BorrowerRepository.save(borrower);
     }
-    @PutMapping("/{id}/email/{email}")
+    @PutMapping("/{id}/email/{email}") // Thay doi email
     public Borrower updateBorrowerEmail(@PathVariable Long id, @PathVariable String email) {
         Borrower borrower = BorrowerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 
         borrower.setEmail(email);
-        return BorrowerRepository.save(borrower);
-    }
-    @PutMapping("/{id}/cardExpirationDate/{cardExpirationDate}")
-    public Borrower updateCardExpirationDate(@PathVariable Long id, @PathVariable LocalDate cardExpirationDate) {
-        Borrower borrower = BorrowerRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
-
-        borrower.setCardExpirationDate(cardExpirationDate);
         return BorrowerRepository.save(borrower);
     }
 }

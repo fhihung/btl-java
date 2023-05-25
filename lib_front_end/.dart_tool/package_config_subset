@@ -70,6 +70,14 @@ provider
 2.12
 file:///Users/fhihung/.pub-cache/hosted/pub.dev/provider-6.0.5/
 file:///Users/fhihung/.pub-cache/hosted/pub.dev/provider-6.0.5/lib/
+separated_row
+2.12
+file:///Users/fhihung/.pub-cache/hosted/pub.dev/separated_row-2.0.0/
+file:///Users/fhihung/.pub-cache/hosted/pub.dev/separated_row-2.0.0/lib/
+sidebarx
+2.15
+file:///Users/fhihung/.pub-cache/hosted/pub.dev/sidebarx-0.15.0/
+file:///Users/fhihung/.pub-cache/hosted/pub.dev/sidebarx-0.15.0/lib/
 source_span
 2.14
 file:///Users/fhihung/.pub-cache/hosted/pub.dev/source_span-1.9.1/
@@ -104,8 +112,8 @@ file:///Users/fhihung/.pub-cache/hosted/pub.dev/vector_math-2.1.4/
 file:///Users/fhihung/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib/
 lib_app
 2.19
-file:///Users/fhihung/Documents/workspaces/projects/btl-java/lib_app/
-file:///Users/fhihung/Documents/workspaces/projects/btl-java/lib_app/lib/
+file:///Users/fhihung/Documents/workspaces/projects/btl-java/lib_front_end/
+file:///Users/fhihung/Documents/workspaces/projects/btl-java/lib_front_end/lib/
 sky_engine
 2.12
 file:///Users/fhihung/Library/Flutter/bin/cache/pkg/sky_engine/

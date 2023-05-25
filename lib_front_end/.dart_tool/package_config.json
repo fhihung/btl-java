@@ -122,6 +122,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "separated_row",
+      "rootUri": "file:///Users/fhihung/.pub-cache/hosted/pub.dev/separated_row-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "sidebarx",
+      "rootUri": "file:///Users/fhihung/.pub-cache/hosted/pub.dev/sidebarx-0.15.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///Users/fhihung/Library/Flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -182,7 +194,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-05-05T16:31:12.434015Z",
+  "generated": "2023-05-25T16:38:02.644850Z",
   "generator": "pub",
   "generatorVersion": "2.19.6"
 }

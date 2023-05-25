@@ -21,13 +21,13 @@ public class Borrow {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "borrower_id", nullable = false)
-    private Borrower borrower;
+    @JoinColumn(name = "borrower_id", nullable = true)
+    Borrower borrower;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate borrowDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate dueDate;
 
     private LocalDate returnDate;

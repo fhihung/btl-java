@@ -17,7 +17,24 @@ import java.util.List;
     public List<Book> getBooks() {
         return BookRepository.findAll();
     }
-        @GetMapping("/{id}")//hien thongtin voi muc tim kiem id
+    @GetMapping("/search/title/{title}")
+    public List<Book> searchBooksByTitle(@PathVariable String title) {
+        return BookRepository.findByTitleContainingIgnoreCase(title);
+    }
+    @GetMapping("/search/publisher/{publisher}")
+    public List<Book> searchBooksByPublisher(@PathVariable String publisher) {
+        return BookRepository.findByPublisherContainingIgnoreCase(publisher);
+    }
+
+    @GetMapping("/search/author/{author}")
+    public List<Book> searchBooksByAuthor(@PathVariable String author) {
+        return BookRepository.findByAuthorContainingIgnoreCase(author);
+    }
+    @GetMapping("/count")
+    public Long getBookCount() {
+        return BookRepository.count();
+    }
+        @GetMapping("/{id}")
         public Book getBookById(@PathVariable Long id) {
             return BookRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
@@ -27,7 +44,8 @@ import java.util.List;
             return BookRepository.save(book);
         }
 
-        @PutMapping("/{id}/quantity/{quantity}")//sua quatity
+
+        @PutMapping("/{id}/quantity/{quantity}") //sua quatity
         public Book updateBookQuantity(@PathVariable Long id, @PathVariable int quantity) {
             Book book = BookRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
@@ -35,8 +53,8 @@ import java.util.List;
             book.setQuantity(quantity);
             return BookRepository.save(book);
         }
-    @PutMapping("/{id}/publicationYear/{publicationYear}")//sua publicationYear
-    public Book updateBookPublicationYear(@PathVariable Long id, @PathVariable int publicationYear) {
+        @PutMapping("/{id}/publicationYear/{publicationYear}")//sua publicationYear
+        public Book updateBookPublicationYear(@PathVariable Long id, @PathVariable int publicationYear) {
         Book book = BookRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 

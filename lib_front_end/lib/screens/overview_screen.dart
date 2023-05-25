@@ -35,21 +35,23 @@ class DashBoardScreen extends StatelessWidget {
               )
             ],
           ),
-          Column(
-            children: [
-              Container(
-                margin: EdgeInsets.all(5),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(child: Text('ID')),
-                    Expanded(child: Text('Tên')),
-                    Expanded(child: Text('Tác giả')),
-                    Expanded(child: Text('Số lượng'))
-                  ],
+          Container(
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(child: Text('ID')),
+                      Expanded(child: Text('Tên')),
+                      Expanded(child: Text('Tác giả')),
+                      Expanded(child: Text('Số lượng'))
+                    ],
+                  ),
                 ),
-              ),
-              Divider()
-            ],
+                Divider()
+              ],
+            ),
           ),
           Expanded(child: BookListWidget())
         ],
@@ -57,21 +59,3 @@ class DashBoardScreen extends StatelessWidget {
     );
   }
 }
-
-
-// class BorderContainer extends StatelessWidget {
-//   String number;
-//   Icon icon;
-//   String text;
-//   BorderContainer({
-//     Key? key,
-//     required this.number,
-//     required this.icon,
-//     required this.text,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return 
-//   }
-// }

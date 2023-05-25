@@ -155,6 +155,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
+  separated_row:
+    dependency: "direct main"
+    description:
+      name: separated_row
+      sha256: afaef869c3640669e31a5fade1677d4580e0a556cc2b1ec8f443393dd9a1b343
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
+  sidebarx:
+    dependency: "direct main"
+    description:
+      name: sidebarx
+      sha256: "26a8392ceddb659c8f2c688beba6c04bcbf520b4d5decb143c5fd7253653081f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -226,4 +242,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=2.19.6 <3.0.0"
-  flutter: ">=1.16.0"
+  flutter: ">=1.17.0"

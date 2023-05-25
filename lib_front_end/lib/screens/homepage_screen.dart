@@ -1,55 +1,130 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'book_list_screen.dart';
-import 'add_book_screen.dart';
+import 'package:sidebarx/sidebarx.dart';
 
-class HomePageScreen extends StatelessWidget {
-  const HomePageScreen({super.key});
+import '../widgets/constants.dart';
+import 'add_book_screen.dart';
+import 'book_list_screen.dart';
+import 'overview_screen.dart';
+import 'search_book_screen.dart';
+
+class ExampleSidebarX extends StatelessWidget {
+  const ExampleSidebarX({
+    Key? key,
+    required SidebarXController controller,
+  })  : _controller = controller,
+        super(key: key);
+
+  final SidebarXController _controller;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ButtonCustom(
-              textBtn: 'Book List',
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => BookListScreen()),
-                );
-              },
-            ),
-            ButtonCustom(
-              textBtn: 'Add Book',
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddBookScreen()),
-                );
-              },
-            ),
+    return SidebarX(
+      controller: _controller,
+      theme: SidebarXTheme(
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: canvasColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        hoverColor: scaffoldBackgroundColor,
+        textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+        selectedTextStyle: const TextStyle(color: Colors.white),
+        itemTextPadding: const EdgeInsets.only(left: 30),
+        selectedItemTextPadding: const EdgeInsets.only(left: 30),
+        itemDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: canvasColor),
+        ),
+        selectedItemDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: actionColor.withOpacity(0.37),
+          ),
+          gradient: const LinearGradient(
+            colors: [accentCanvasColor, canvasColor],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.28),
+              blurRadius: 30,
+            )
           ],
         ),
+        iconTheme: IconThemeData(
+          color: Colors.white.withOpacity(0.7),
+          size: 20,
+        ),
+        selectedIconTheme: const IconThemeData(
+          color: Colors.white,
+          size: 20,
+        ),
       ),
+      extendedTheme: const SidebarXTheme(
+        width: 200,
+        decoration: BoxDecoration(
+          color: canvasColor,
+        ),
+      ),
+      footerDivider: divider,
+      headerBuilder: (context, extended) {
+        return SizedBox(
+          height: 100,
+        );
+      },
+      items: [
+        SidebarXItem(
+          icon: Icons.home,
+          label: 'Home',
+        ),
+        const SidebarXItem(
+          icon: Icons.search,
+          label: 'Search',
+        ),
+        const SidebarXItem(
+          icon: Icons.people,
+          label: 'People',
+        ),
+        const SidebarXItem(
+          icon: Icons.favorite,
+          label: 'Favorites',
+        ),
+        const SidebarXItem(
+          iconWidget: FlutterLogo(size: 20),
+          label: 'Flutter',
+        ),
+      ],
     );
   }
 }
 
-class ButtonCustom extends StatelessWidget {
-  VoidCallback press;
-  String textBtn;
-  ButtonCustom({
+class ScreensExample extends StatelessWidget {
+  const ScreensExample({
     Key? key,
-    required this.press,
-    required this.textBtn,
+    required this.controller,
   }) : super(key: key);
+
+  final SidebarXController controller;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: press, child: Text(textBtn));
+    final theme = Theme.of(context);
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        switch (controller.selectedIndex) {
+          case 0:
+            return DashBoardScreen();
+          case 1:
+            return AddBookScreen();
+          case 2:
+            return BookListScreen();
+          case 3:
+            return BookSearchScreen();
+
+          default:
+            return DashBoardScreen();
+        }
+      },
+    );
   }
 }

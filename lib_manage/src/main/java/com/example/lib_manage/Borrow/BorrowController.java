@@ -25,24 +25,31 @@ public class BorrowController {
         return BorrowRepository.findAll();
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addBorrow") //Thêm ticket mượn sách
     public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
         Book book = borrow.getBook();
-        Long id = book.getId();
-        if(book != null){
-            Optional<Book> optionalBook = BookRepository.findById(id);
-            if(optionalBook.isPresent()){
+
+        if (book != null) {
+            Long bookId = book.getId();
+            Optional<Book> optionalBook = BookRepository.findById(bookId);
+
+            if (optionalBook.isPresent()) {
                 Book existingBook = optionalBook.get();
-                if(existingBook.getQuantity()==0){
-                    throw new IllegalArgumentException("het sach trong kho");
+                int quantity = existingBook.getQuantity();
+
+                if (quantity == 0) {
+                    throw new IllegalArgumentException("Out of stock");
                 }
-                existingBook.setQuantity(existingBook.getQuantity()-1);
+
+                existingBook.setQuantity(quantity - 1);
                 BookRepository.save(existingBook);
+            } else {
+                throw new IllegalArgumentException("Book not found");
             }
         }
         return BorrowRepository.save(borrow);
     }
-    @PutMapping("/{id}/borrowDate/{borrowDate}")
+    @PutMapping("/{id}/borrowDate/{borrowDate}") // sửa ngày mượn
     public Borrow updateBorrowDate(@PathVariable Long id, @PathVariable LocalDate borrowDate) {
         Borrow borrow = BorrowRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
@@ -50,7 +57,7 @@ public class BorrowController {
         borrow.setBorrowDate(borrowDate);
         return BorrowRepository.save(borrow);
     }
-    @PutMapping("/{id}/dueDate/{dueDate}")
+    @PutMapping("/{id}/dueDate/{dueDate}") // sửa thời gian còn lại phải trả
     public Borrow updateDueDate(@PathVariable Long id, @PathVariable LocalDate dueDate) {
         Borrow borrow = BorrowRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
@@ -58,7 +65,7 @@ public class BorrowController {
         borrow.setDueDate(dueDate);
         return BorrowRepository.save(borrow);
     }
-    @PutMapping("/{id}/returnDate/{returnDate}")
+    @PutMapping("/{id}/returnDate/{returnDate}") // sửa ngày trả
     public Borrow updateReturnDate(@PathVariable Long id, @PathVariable LocalDate returnDate) {
         Borrow borrow = BorrowRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
@@ -67,19 +74,3 @@ public class BorrowController {
         return BorrowRepository.save(borrow);
     }
 }
-//
-//    @GetMapping
-//    public List<Borrow> getBorrows() {
-//        return BorrowRepository.findAll();
-//    }
-//
-//    //    @PostMapping("/addBorrow")
-////    public ResponseEntity<Borrow> addBorrow(@RequestBody Borrow borrow) {
-////        Borrow createdBorrow = BorrowRepository.save(borrow);
-////        return new ResponseEntity<>(createdBorrow, HttpStatus.CREATED);
-////    }
-//    @PostMapping
-//    public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
-//        return BorrowRepository.save(borrow);
-//    }
-//}

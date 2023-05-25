@@ -25,12 +25,6 @@ public class Borrower {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private LocalDate cardExpirationDate;
-
-    @Column(nullable = false)
-    private int numberOfBooksBorrowed;
-
     // Getters and setters
 
     public Long getId() {
@@ -73,19 +67,5 @@ public class Borrower {
         this.email = email;
     }
 
-    public LocalDate getCardExpirationDate() {
-        return cardExpirationDate;
-    }
 
-    public void setCardExpirationDate(LocalDate cardExpirationDate) {
-        this.cardExpirationDate = cardExpirationDate;
-    }
-
-    public int getNumberOfBooksBorrowed() {
-        return numberOfBooksBorrowed;
-    }
-
-    public void setNumberOfBooksBorrowed(int numberOfBooksBorrowed) {
-        this.numberOfBooksBorrowed = numberOfBooksBorrowed;
-    }
 }
