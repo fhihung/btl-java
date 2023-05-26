@@ -1,34 +1,3 @@
-// // ignore_for_file: public_member_api_docs, sort_constructors_first
-// class Book {
-//   final int id;
-//   final String title;
-//   final String author;
-//   final int quantity;
-//   final int borrowerId;
-//   final int borrowerQuantity;
-
-//   Book({
-//     required this.id,
-//     required this.title,
-//     required this.quantity,
-//     required this.author,
-//     required this.borrowerId,
-//     required this.borrowerQuantity,
-//   });
-
-//   factory Book.fromMap(Map bookMap) {
-//     return Book(
-//         id: bookMap['id'],
-//         title: bookMap['title'],
-//         author: bookMap['author'],
-//         quantity: bookMap['quantity'],
-//         borrowerId: bookMap['borrowerId'],
-//         borrowerQuantity: bookMap['borrowerQuantity']);
-//   }
-//   // void toggle() {
-//   //   done = !done;
-//   // }
-// }
 class Book {
   int? id;
   final String title;

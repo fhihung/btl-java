@@ -175,44 +175,65 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
         ),
         child: Column(
           children: [
-            DropdownButton<SearchOption>(
-              value: _selectedOption,
-              onChanged: (SearchOption? option) {
-                if (option != null) {
-                  setState(() {
-                    _selectedOption = option;
-                  });
-                }
-              },
-              items: [
-                DropdownMenuItem(
-                  value: SearchOption.Title,
-                  child: Text('Search by Title'),
+            SizedBox(height: 16.0),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 2.0,
+                        ),
+                      ),
+                      hintText: _selectedOption == SearchOption.Title
+                          ? 'Title'
+                          : _selectedOption == SearchOption.Author
+                              ? 'Author'
+                              : 'Publisher',
+                      prefixIcon: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          child: Icon(Icons.search)),
+                      prefixIconColor: Colors.black,
+                      // fillColor: Colors.black,
+                    ),
+                    onChanged: (value) {
+                      final query = _searchController.text;
+                      _searchBooks(query);
+                    },
+                  ),
                 ),
-                DropdownMenuItem(
-                  value: SearchOption.Author,
-                  child: Text('Search by Author'),
-                ),
-                DropdownMenuItem(
-                  value: SearchOption.Publisher,
-                  child: Text('Search by Publisher'),
+                PopupMenuButton<SearchOption>(
+                  icon: Icon(Icons.filter_list_sharp),
+                  initialValue: _selectedOption,
+                  onSelected: (SearchOption option) {
+                    setState(() {
+                      _selectedOption = option;
+                    });
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<SearchOption>>[
+                    PopupMenuItem<SearchOption>(
+                      value: SearchOption.Title,
+                      child: Text('Title'),
+                    ),
+                    PopupMenuItem<SearchOption>(
+                      value: SearchOption.Author,
+                      child: Text('Author'),
+                    ),
+                    PopupMenuItem<SearchOption>(
+                      value: SearchOption.Publisher,
+                      child: Text('Publisher'),
+                    ),
+                  ],
                 ),
               ],
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                labelText: _selectedOption == SearchOption.Title
-                    ? 'Title'
-                    : _selectedOption == SearchOption.Author
-                        ? 'Author'
-                        : 'Publisher',
-              ),
-              onChanged: (value) {
-                final query = _searchController.text;
-                _searchBooks(query);
-              },
             ),
             SizedBox(height: 16.0),
             Container(
@@ -220,10 +241,10 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
               child: Row(
                 children: <Widget>[
                   Expanded(child: Text('ID')),
-                  Expanded(child: Text('Tên')),
-                  Expanded(child: Text('Tác giả')),
-                  Expanded(child: Text('Số lượng')),
-                  Expanded(child: Text('Khác')),
+                  Expanded(flex: 3, child: Text('Tên')),
+                  Expanded(flex: 2, child: Text('Tác giả')),
+                  Expanded(flex: 2, child: Text('Số lượng')),
+                  Expanded(flex: 1, child: Text('Khác')),
                 ],
               ),
             ),
@@ -241,24 +262,50 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                           child: Row(
                             children: <Widget>[
                               Expanded(child: Text('${book.id}')),
-                              Expanded(child: Text(book.title)),
-                              Expanded(child: Text('${book.author}')),
-                              Expanded(child: Text('${book.quantity}')),
+                              Expanded(flex: 3, child: Text(book.title)),
+                              Expanded(flex: 2, child: Text('${book.author}')),
                               Expanded(
+                                  flex: 2, child: Text('${book.quantity}')),
+                              Expanded(
+                                flex: 1,
                                 child: Row(
                                   children: [
-                                    IconButton(
-                                      icon: Icon(Icons.edit),
-                                      onPressed: () {
-                                        _showEditDialog(book);
+                                    PopupMenuButton(
+                                      icon: Icon(Icons.more_horiz),
+                                      itemBuilder: (context) {
+                                        return [
+                                          PopupMenuItem<int>(
+                                              value: 0,
+                                              child:
+                                                  Text("Thông tin chi tiết")),
+                                          PopupMenuItem<int>(
+                                            value: 1,
+                                            child: Text("Sửa"),
+                                          ),
+                                          PopupMenuItem<int>(
+                                            value: 2,
+                                            child: Text("Xóa"),
+                                          ),
+                                        ];
                                       },
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.delete),
-                                      onPressed: () {
-                                        _deleteBook(book.id!);
+                                      onSelected: (value) {
+                                        if (value == 0) {}
+                                        if (value == 1) {
+                                          _showEditDialog(book);
+                                        }
+                                        if (value == 2) {
+                                          _deleteBook(book.id!);
+                                        }
                                       },
+
+                                      // _showEditDialog(book);
                                     ),
+                                    // IconButton(
+                                    //   icon: Icon(Icons.delete),
+                                    //   onPressed: () {
+
+                                    //   },
+                                    // ),
                                   ],
                                 ),
                               ),
