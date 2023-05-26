@@ -2,6 +2,7 @@ package com.example.lib_manage.Borrow;
 
 import com.example.lib_manage.Book.Book;
 
+import com.example.lib_manage.Borrower.Borrower;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,28 +50,38 @@ public class BorrowController {
         }
         return BorrowRepository.save(borrow);
     }
-    @PutMapping("/{id}/borrowDate/{borrowDate}") // sửa ngày mượn
-    public Borrow updateBorrowDate(@PathVariable Long id, @PathVariable LocalDate borrowDate) {
+    @PutMapping("/update/{id}")
+    public Borrow updateBorrow(@PathVariable Long id , @Valid @RequestBody Borrow updateBorrow)   {
         Borrow borrow = BorrowRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+        borrow.setBorrowDate(updateBorrow.getBorrowDate());
+        borrow.setDueDate(updateBorrow.getDueDate());
+        borrow.setReturnDate(updateBorrow.getReturnDate());
 
-        borrow.setBorrowDate(borrowDate);
         return BorrowRepository.save(borrow);
     }
-    @PutMapping("/{id}/dueDate/{dueDate}") // sửa thời gian còn lại phải trả
-    public Borrow updateDueDate(@PathVariable Long id, @PathVariable LocalDate dueDate) {
-        Borrow borrow = BorrowRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
-
-        borrow.setDueDate(dueDate);
-        return BorrowRepository.save(borrow);
-    }
-    @PutMapping("/{id}/returnDate/{returnDate}") // sửa ngày trả
-    public Borrow updateReturnDate(@PathVariable Long id, @PathVariable LocalDate returnDate) {
-        Borrow borrow = BorrowRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
-
-        borrow.setReturnDate(returnDate);
-        return BorrowRepository.save(borrow);
-    }
+//    @PutMapping("/{id}/borrowDate/{borrowDate}") // sửa ngày mượn
+//    public Borrow updateBorrowDate(@PathVariable Long id, @PathVariable LocalDate borrowDate) {
+//        Borrow borrow = BorrowRepository.findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+//
+//        borrow.setBorrowDate(borrowDate);
+//        return BorrowRepository.save(borrow);
+//    }
+//    @PutMapping("/{id}/dueDate/{dueDate}") // sửa thời gian còn lại phải trả
+//    public Borrow updateDueDate(@PathVariable Long id, @PathVariable LocalDate dueDate) {
+//        Borrow borrow = BorrowRepository.findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+//
+//        borrow.setDueDate(dueDate);
+//        return BorrowRepository.save(borrow);
+//    }
+//    @PutMapping("/{id}/returnDate/{returnDate}") // sửa ngày trả
+//    public Borrow updateReturnDate(@PathVariable Long id, @PathVariable LocalDate returnDate) {
+//        Borrow borrow = BorrowRepository.findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+//
+//        borrow.setReturnDate(returnDate);
+//        return BorrowRepository.save(borrow);
+//    }
 }
