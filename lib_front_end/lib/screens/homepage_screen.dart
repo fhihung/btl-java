@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../widgets/constants.dart';
-import 'add_book_screen.dart';
-import 'book_list_screen.dart';
+import 'book/add_book_screen.dart';
+import 'book/book_list_screen.dart';
+
+import 'borrow/request_borrow_screen.dart';
+import 'borrower/borrower_list_screen.dart';
 import 'overview_screen.dart';
-import 'search_book_screen.dart';
+import 'book/search_book_screen.dart';
 
 class ExampleSidebarX extends StatelessWidget {
   const ExampleSidebarX({
@@ -118,9 +121,9 @@ class ScreensExample extends StatelessWidget {
           case 1:
             return BookSearchScreen();
           case 2:
-            return BookListScreen();
+            return BorrowerListWidget();
           case 3:
-            return AddBookScreen();
+            return BorrowRequestScreen();
 
           default:
             return DashBoardScreen();

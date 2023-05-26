@@ -18,22 +18,26 @@ public class BorrowerController {
     public Long getBorrowerCount() {
         return BorrowerRepository.count();
     }
-    @GetMapping("/search/id/{id}")
-    public List<Borrower> searchBooksByID(@PathVariable Long id) {
-        return BorrowerRepository.findByIDContainingIgnoreCase(id);
+    @GetMapping()
+    public List<Borrower> getBorrowers() {
+        return BorrowerRepository.findAll();
     }
-    @GetMapping("/search/fullName/{fullName}")
-    public List<Borrower> searchBooksByFullName(@PathVariable String fullName) {
-        return BorrowerRepository.findByFullNameContainingIgnoreCase(fullName);
-    }
-    @GetMapping("/search/phoneNumber/{phoneNumber}")
-    public List<Borrower> searchBooksByPhoneNumber(@PathVariable String phoneNumber) {
-        return BorrowerRepository.findByPhoneNumberContainingIgnoreCase(phoneNumber);
-    }
-    @GetMapping("/search/email/{email}")
-    public List<Borrower> searchBooksByEmail(@PathVariable String email) {
-        return BorrowerRepository.findByEmailContainingIgnoreCase(email);
-    }
+//    @GetMapping("/search/id/{id}")
+//    public List<Borrower> searchBooksByID(@PathVariable Long id) {
+//        return BorrowerRepository.findByIdContainingIgnoreCase(id);
+//    }
+//    @GetMapping("/search/fullName/{fullName}")
+//    public List<Borrower> searchBooksByFullName(@PathVariable String fullName) {
+//        return BorrowerRepository.findByFullNameContainingIgnoreCase(fullName);
+//    }
+//    @GetMapping("/search/phoneNumber/{phoneNumber}")
+//    public List<Borrower> searchBooksByPhoneNumber(@PathVariable String phoneNumber) {
+//        return BorrowerRepository.findByPhoneNumberContainingIgnoreCase(phoneNumber);
+//    }
+//    @GetMapping("/search/email/{email}")
+//    public List<Borrower> searchBooksByEmail(@PathVariable String email) {
+//        return BorrowerRepository.findByEmailContainingIgnoreCase(email);
+//    }
     @PostMapping("/add") // Them nguoi muon
     public Borrower addBorrower(@RequestBody Borrower borrower) {
         return BorrowerRepository.save(borrower);

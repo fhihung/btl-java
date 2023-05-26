@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lib_app/screens/add_book_screen.dart';
-import 'package:lib_app/screens/book_list_screen.dart';
+import 'package:lib_app/screens/book/add_book_screen.dart';
+import 'package:lib_app/screens/book/book_list_screen.dart';
 import 'package:lib_app/screens/overview_screen.dart';
-import 'package:lib_app/screens/search_book_screen.dart';
+import 'package:lib_app/screens/book/search_book_screen.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import 'screens/homepage_screen.dart';
