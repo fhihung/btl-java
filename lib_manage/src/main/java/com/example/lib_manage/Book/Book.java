@@ -1,7 +1,7 @@
 package com.example.lib_manage.Book;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "books")

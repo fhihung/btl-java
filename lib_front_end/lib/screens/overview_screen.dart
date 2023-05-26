@@ -81,7 +81,8 @@ class DashBoardScreen extends StatelessWidget {
                         Expanded(child: Text('ID')),
                         Expanded(child: Text('Tên')),
                         Expanded(child: Text('Tác giả')),
-                        Expanded(child: Text('Số lượng'))
+                        Expanded(child: Text('Số lượng')),
+                        Expanded(child: Text('Khác')),
                       ],
                     ),
                   ),

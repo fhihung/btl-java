@@ -4,7 +4,7 @@ package com.example.lib_manage.Borrower;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "borrowers")

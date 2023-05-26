@@ -87,11 +87,11 @@ class ExampleSidebarX extends StatelessWidget {
         ),
         const SidebarXItem(
           icon: Icons.favorite,
-          label: 'Favorites',
+          label: 'Search',
         ),
         const SidebarXItem(
           icon: Icons.local_activity,
-          label: 'Flutter',
+          label: 'Borrow',
         ),
       ],
     );
@@ -116,11 +116,11 @@ class ScreensExample extends StatelessWidget {
           case 0:
             return DashBoardScreen();
           case 1:
-            return AddBookScreen();
+            return BookSearchScreen();
           case 2:
             return BookListScreen();
           case 3:
-            return BookSearchScreen();
+            return AddBookScreen();
 
           default:
             return DashBoardScreen();

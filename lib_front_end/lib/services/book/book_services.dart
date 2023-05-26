@@ -105,15 +105,17 @@ class BookService {
     }
   }
 
-  static Future<void> update(
-    int id,
-    int newQuantity,
-  ) async {
+  static Future<Book> updateBook(Book book) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/$id/quantity/$newQuantity'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      Uri.parse('$baseUrl/update/${book.id}'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(book.toJsonWithoutId()),
     );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return Book.fromJson(data);
+    } else {
+      throw Exception('Failed to update book');
+    }
   }
 }

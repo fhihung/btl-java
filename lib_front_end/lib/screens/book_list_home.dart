@@ -33,7 +33,17 @@ class BookListWidget extends StatelessWidget {
                           Expanded(child: Text('${book.id}')),
                           Expanded(child: Text(book.title)),
                           Expanded(child: Text('${book.author}')),
-                          Expanded(child: Text('${book.quantity}'))
+                          Expanded(child: Text('${book.quantity}')),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.more_horiz),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),

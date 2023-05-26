@@ -70,4 +70,15 @@ class Book {
       'description': description,
     };
   }
+
+  Map<String, dynamic> toJsonWithoutId() {
+    return {
+      'title': this.title,
+      'author': this.author,
+      'publisher': this.publisher,
+      'publicationYear': this.publicationYear,
+      'quantity': this.quantity,
+      'description': this.description,
+    };
+  }
 }
