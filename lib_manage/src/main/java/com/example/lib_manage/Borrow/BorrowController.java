@@ -45,9 +45,6 @@ public class BorrowController {
     }
 
 
-
-
-
     @PostMapping("/addBorrow") //Thêm ticket mượn sách
 public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
     Long personId = borrow.getBorrower().getId();

@@ -16,8 +16,9 @@ class Borrow {
     this.returnDate,
   });
 
-  factory Borrow.fromJson(Map<String, dynamic> json) {
+factory Borrow.fromJson(Map<String, dynamic> json) {
     return Borrow(
+      id: json['borrowId'],
       bookId: json['bookId'],
       borrowerId: json['borrowerId'],
       borrowDate: json['borrowDate'],
@@ -25,15 +26,7 @@ class Borrow {
       returnDate: json['returnDate'],
     );
   }
-    factory Borrow.fromJson(Map<String, dynamic> json) {
-    return Borrow(
-      id: json['id'],
-      borrowDate: json['borrowDate'],
-      dueDate: json['dueDate'],
-      returnDate: json['returnDate'],
-    );
-  }
-}
+
 
   Map<String, dynamic> toJson() {
     return {

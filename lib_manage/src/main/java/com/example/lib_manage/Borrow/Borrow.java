@@ -55,12 +55,6 @@ public class Borrow {
     public Borrower getBorrower() {
         return borrower;
     }
-    public Long getBookId() {
-        return getBook().getId();
-    }
-    public Long getBorrowerId() {
-        return getBorrower().getId();
-    }
 
     public void setBorrower(Borrower borrower) {
         this.borrower = borrower;
