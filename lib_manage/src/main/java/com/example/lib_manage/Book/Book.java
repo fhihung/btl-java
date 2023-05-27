@@ -22,8 +22,8 @@ public class Book {
     public void setTitle(String title) {
         this.title = title;
     }
-
-
+    @OneToMany(mappedBy = "book")
+    private List<Borrow> borrows;
 
     public String getAuthor() {
         return author;

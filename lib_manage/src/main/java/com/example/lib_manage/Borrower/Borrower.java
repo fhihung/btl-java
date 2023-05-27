@@ -27,16 +27,16 @@ public class Borrower {
     @Column(nullable = false)
     private String email;
 
-//    @OneToMany(mappedBy = "borrower", fetch = FetchType.LAZY)
-//    private List<Borrow> borrows;
-//
-//    public List<Borrow> getBorrows() {
-//        return borrows;
-//    }
-//
-//    public void setBorrows(List<Borrow> borrows) {
-//        this.borrows = borrows;
-//    }
+    @OneToMany(mappedBy = "borrower", fetch = FetchType.LAZY)
+    private List<Borrow> borrows;
+
+    public List<Borrow> getBorrows() {
+        return borrows;
+    }
+
+    public void setBorrows(List<Borrow> borrows) {
+        this.borrows = borrows;
+    }
 // Getters and setters
 
     public Long getId() {
