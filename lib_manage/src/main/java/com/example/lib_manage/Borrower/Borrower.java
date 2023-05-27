@@ -2,8 +2,10 @@ package com.example.lib_manage.Borrower;
 
 //package com.example.lib_manage.Book;
 
+import com.example.lib_manage.Borrow.Borrow;
 import jakarta.persistence.*;
 
+import java.util.List;
 
 
 @Entity
@@ -25,7 +27,17 @@ public class Borrower {
     @Column(nullable = false)
     private String email;
 
-    // Getters and setters
+//    @OneToMany(mappedBy = "borrower", fetch = FetchType.LAZY)
+//    private List<Borrow> borrows;
+//
+//    public List<Borrow> getBorrows() {
+//        return borrows;
+//    }
+//
+//    public void setBorrows(List<Borrow> borrows) {
+//        this.borrows = borrows;
+//    }
+// Getters and setters
 
     public Long getId() {
         return id;
@@ -66,6 +78,5 @@ public class Borrower {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 }
