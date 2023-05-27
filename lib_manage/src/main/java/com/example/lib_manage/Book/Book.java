@@ -1,12 +1,7 @@
 package com.example.lib_manage.Book;
 
-import com.example.lib_manage.Borrow.Borrow;
-import com.example.lib_manage.Borrower.Borrower;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.util.List;
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 @Entity
 @Table(name = "books")
@@ -22,8 +17,6 @@ public class Book {
     public void setTitle(String title) {
         this.title = title;
     }
-    @OneToMany(mappedBy = "book")
-    private List<Borrow> borrows;
 
     public String getAuthor() {
         return author;
@@ -81,7 +74,6 @@ public class Book {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
 
     public Long getId() {
         return id;

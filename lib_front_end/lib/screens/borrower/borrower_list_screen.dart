@@ -166,11 +166,13 @@ class BorrowerListWidget extends StatelessWidget {
                             ),
                             Expanded(
                               flex: 2,
-                              child: PopupMenuButton(
-                                icon: Icon(Icons.more_horiz),
-                                itemBuilder: (context) {
-                                  return [];
-                                },
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.more_horiz),
+                                    onPressed: () {},
+                                  ),
+                                ],
                               ),
                             ),
                           ],
