@@ -27,12 +27,9 @@ public class BorrowController {
     private com.example.lib_manage.Borrow.BorrowRepository BorrowRepository;
     @Autowired
     private com.example.lib_manage.Book.BookRepository BookRepository;
-//    @GetMapping("/getRequest")
-//    public List<Borrow> getBorrows() {
-//        return BorrowRepository.findAllWithBookAndBorrower();
-//    }
 
-    @GetMapping("/getBorrowInfo")
+
+    @GetMapping()
     public List<BorrowInfo> getBorrowInfo() {
         List<Borrow> borrows = BorrowRepository.findAll();
         List<BorrowInfo> borrowInfos = new ArrayList<>();
@@ -43,32 +40,65 @@ public class BorrowController {
 
         return borrowInfos;
     }
-
-
     @PostMapping("/addBorrow") //Thêm ticket mượn sách
-public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
-    Long personId = borrow.getBorrower().getId();
-    Long bookId = borrow.getBook().getId();
+    public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
+        Book book = borrow.getBook();
 
-    Borrower borrower = BorrowerRepository.findById(personId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Borrower not found"));
+        if (book != null) {
+            Long bookId = book.getId();
+            Optional<Book> optionalBook = BookRepository.findById(bookId);
 
-    Book book = BookRepository.findById(bookId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+            if (optionalBook.isPresent()) {
+                Book existingBook = optionalBook.get();
+                int quantity = existingBook.getQuantity();
 
-    if (book.getQuantity() <= 0) {
-        throw new IllegalArgumentException("Out of stock");
+                if (quantity == 0) {
+                    throw new IllegalArgumentException("Out of stock");
+                }
+
+                existingBook.setQuantity(quantity - 1);
+                BookRepository.save(existingBook);
+            } else {
+                throw new IllegalArgumentException("Book not found");
+            }
+        }
+        return BorrowRepository.save(borrow);
     }
 
-    book.setQuantity(book.getQuantity() - 1);
-    BookRepository.save(book);
 
-    borrow.setBorrower(borrower);
-    borrow.setBook(book);
-    borrow.setBorrowDate(LocalDate.now());
-
-    return BorrowRepository.save(borrow);
-}
+//    @PostMapping("/addBorrow") //Thêm ticket mượn sách
+//public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
+//        if (borrow.getBook() == null) {
+//            throw new IllegalArgumentException("Book is required");
+//        }
+//        if (borrow.getBorrower() == null) {
+//            throw new IllegalArgumentException("Borrower is required");
+//        }
+//
+//        // Kiểm tra Borrow không null
+//
+//    Long personId = borrow.getBorrower().getId();
+//    Long bookId = borrow.getBook().getId();
+//
+//    Borrower borrower = BorrowerRepository.findById(personId)
+//            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Borrower not found"));
+//
+//    Book book = BookRepository.findById(bookId)
+//            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+//
+//    if (book.getQuantity() <= 0) {
+//        throw new IllegalArgumentException("Out of stock");
+//    }
+//
+//    book.setQuantity(book.getQuantity() - 1);
+//    BookRepository.save(book);
+//
+//    borrow.setBorrower(borrower);
+//    borrow.setBook(book);
+//    borrow.setBorrowDate(LocalDate.now());
+//
+//    return BorrowRepository.save(borrow);
+//}
     @PostMapping("/returnBook") // Yêu cầu trả sách
     public Borrow returnBook(@RequestBody @Valid Borrow borrow) {
         Long borrowId = borrow.getId();

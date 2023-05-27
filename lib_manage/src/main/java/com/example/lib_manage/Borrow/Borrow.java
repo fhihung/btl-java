@@ -4,6 +4,8 @@ package com.example.lib_manage.Borrow;
 
 import com.example.lib_manage.Book.Book;
 import com.example.lib_manage.Borrower.Borrower;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -14,12 +16,12 @@ public class Borrow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonIgnoreProperties("borrows")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book ;
 
-
+    @JsonIgnoreProperties("borrows")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "borrower_id", nullable = true)
     Borrower borrower;
@@ -45,6 +47,7 @@ public class Borrow {
     public Book getBook() {
         return book;
     }
+
 
     public void setBook(Book book) {
         this.book = book;
@@ -81,4 +84,20 @@ public class Borrow {
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
+
+    public Borrow() {
+    }
+
+
+    public Borrow(Book book, Borrower borrower, LocalDate borrowDate, LocalDate dueDate, LocalDate returnDate) {
+        this.book = book;
+        this.borrower = borrower;
+        this.borrowDate = borrowDate;
+        this.dueDate = dueDate;
+        this.returnDate = returnDate;
+    }
+    public BorrowInfo toBorrowInfo() {
+        return new BorrowInfo(getId(), getBook().getId(), getBorrower().getId(), getBorrowDate(), getDueDate(), getReturnDate());
+    }
+
 }

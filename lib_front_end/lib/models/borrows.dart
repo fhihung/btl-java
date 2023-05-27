@@ -5,7 +5,9 @@ class Borrow {
   final int borrowerId;
   final String borrowDate;
   final String dueDate;
-  String? returnDate;
+  final String? returnDate;
+  String? bookName;
+  String? borrowerName;
 
   Borrow({
     this.id,
@@ -14,9 +16,11 @@ class Borrow {
     required this.borrowDate,
     required this.dueDate,
     this.returnDate,
+    this.bookName,
+    this.borrowerName,
   });
 
-factory Borrow.fromJson(Map<String, dynamic> json) {
+  factory Borrow.fromJson(Map<String, dynamic> json) {
     return Borrow(
       id: json['borrowId'],
       bookId: json['bookId'],
@@ -27,11 +31,10 @@ factory Borrow.fromJson(Map<String, dynamic> json) {
     );
   }
 
-
   Map<String, dynamic> toJson() {
     return {
-      'book': {'id': bookId},
-      'borrower': {'id': borrowerId},
+      'bookId': bookId,
+      'borrowerId': borrowerId,
       'borrowDate': borrowDate,
       'dueDate': dueDate,
       'returnDate': returnDate,
