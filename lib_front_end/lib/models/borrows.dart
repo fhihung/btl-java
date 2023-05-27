@@ -33,8 +33,8 @@ class Borrow {
 
   Map<String, dynamic> toJson() {
     return {
-      'bookId': bookId,
-      'borrowerId': borrowerId,
+      'book': {'id': bookId},
+      'borrower': {'id': borrowerId},
       'borrowDate': borrowDate,
       'dueDate': dueDate,
       'returnDate': returnDate,

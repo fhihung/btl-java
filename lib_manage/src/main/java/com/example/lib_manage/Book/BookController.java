@@ -1,7 +1,5 @@
 package com.example.lib_manage.Book;
 
-import com.example.lib_manage.Borrow.Borrow;
-import com.example.lib_manage.Borrower.Borrower;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

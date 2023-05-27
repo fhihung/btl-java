@@ -1,12 +1,9 @@
-import 'books.dart';
-
 class Borrower {
   int? id;
   String fullName;
   String? address;
   String? phoneNumber;
   String? email;
-  List<Book>? borrowedBooks; // Danh sách sách mượn
 
   Borrower({
     this.id,
@@ -14,7 +11,6 @@ class Borrower {
     this.address,
     this.phoneNumber,
     this.email,
-    this.borrowedBooks,
   });
 
   factory Borrower.fromJson(Map<String, dynamic> json) {
