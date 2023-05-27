@@ -20,42 +20,35 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/borrows")
 public class BorrowController {
+
     @Autowired
     private com.example.lib_manage.Borrower.BorrowerRepository BorrowerRepository;
     @Autowired
     private com.example.lib_manage.Borrow.BorrowRepository BorrowRepository;
     @Autowired
     private com.example.lib_manage.Book.BookRepository BookRepository;
-    @GetMapping
-    public List<Borrow> getBorrows() {
-        return BorrowRepository.findAll();
+//    @GetMapping("/getRequest")
+//    public List<Borrow> getBorrows() {
+//        return BorrowRepository.findAllWithBookAndBorrower();
+//    }
+
+    @GetMapping("/getBorrowInfo")
+    public List<BorrowInfo> getBorrowInfo() {
+        List<Borrow> borrows = BorrowRepository.findAll();
+        List<BorrowInfo> borrowInfos = new ArrayList<>();
+
+        for (Borrow borrow : borrows) {
+            borrowInfos.add(borrow.toBorrowInfo());
+        }
+
+        return borrowInfos;
     }
 
-//    @PostMapping("/addBorrow") //Thêm ticket mượn sách
-//    public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
-//        Book book = borrow.getBook();
-//
-//        if (book != null) {
-//            Long bookId = book.getId();
-//            Optional<Book> optionalBook = BookRepository.findById(bookId);
-//
-//            if (optionalBook.isPresent()) {
-//                Book existingBook = optionalBook.get();
-//                int quantity = existingBook.getQuantity();
-//
-//                if (quantity == 0) {
-//                    throw new IllegalArgumentException("Out of stock");
-//                }
-//
-//                existingBook.setQuantity(quantity - 1);
-//                BookRepository.save(existingBook);
-//            } else {
-//                throw new IllegalArgumentException("Book not found");
-//            }
-//        }
-//        return BorrowRepository.save(borrow);
-//    }
-@PostMapping("/addBorrow") //Thêm ticket mượn sách
+
+
+
+
+    @PostMapping("/addBorrow") //Thêm ticket mượn sách
 public Borrow addBorrow(@RequestBody @Valid Borrow borrow) {
     Long personId = borrow.getBorrower().getId();
     Long bookId = borrow.getBook().getId();

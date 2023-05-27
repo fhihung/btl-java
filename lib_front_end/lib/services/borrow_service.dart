@@ -45,4 +45,19 @@ class BorrowService {
       throw Exception('Failed to send return request');
     }
   }
+  Future<Borrow> returnBook(Borrow borrow) async {
+  final response = await http.post(
+    Uri.parse('http://your-api-url/returnBook'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(borrow.toJson()),
+  );
+
+  if (response.statusCode == 200) {
+    return Borrow.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to return book: ${response.statusCode}');
+  }
+}
 }

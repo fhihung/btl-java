@@ -47,12 +47,19 @@ public class Borrow {
         return book;
     }
 
+
     public void setBook(Book book) {
         this.book = book;
     }
 
     public Borrower getBorrower() {
         return borrower;
+    }
+    public Long getBookId() {
+        return getBook().getId();
+    }
+    public Long getBorrowerId() {
+        return getBorrower().getId();
     }
 
     public void setBorrower(Borrower borrower) {
@@ -81,6 +88,21 @@ public class Borrow {
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public Borrow() {
+    }
+
+
+    public Borrow(Book book, Borrower borrower, LocalDate borrowDate, LocalDate dueDate, LocalDate returnDate) {
+        this.book = book;
+        this.borrower = borrower;
+        this.borrowDate = borrowDate;
+        this.dueDate = dueDate;
+        this.returnDate = returnDate;
+    }
+    public BorrowInfo toBorrowInfo() {
+        return new BorrowInfo(getId(), getBook().getId(), getBorrower().getId(), getBorrowDate(), getDueDate(), getReturnDate());
     }
 
 }
