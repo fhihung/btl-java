@@ -121,7 +121,7 @@ class ScreensExample extends StatelessWidget {
           case 1:
             return BookSearchScreen();
           case 2:
-            return BorrowScreen();
+            return BorrowListWidget();
           case 3:
             return BorrowRequestScreen();
 
