@@ -1,70 +1,59 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-import 'package:lib_app/widgets/home_appbar.dart';
+import '../models/books.dart';
+import '../models/borrowers.dart';
+import '../services/borrower_service.dart';
 
-import '../services/book/book_services.dart';
-import '../services/borrower/borrower_service.dart';
-import '../widgets/box_get_total.dart';
-import '../widgets/constants.dart';
-import 'book/book_list_home.dart';
-import 'book/book_list_screen.dart';
-import 'book/book_overview.dart';
-import 'borrower/borrower_list_screen.dart';
-import 'borrower/borrower_overview.dart';
-
-class DashBoardScreen extends StatelessWidget {
-  DashBoardScreen({super.key});
-
+class BorrowerListWidgett extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          child: Column(
-        children: [
-          Row(
-            children: [
-              GetTotalContainer(
-                icon: Icon(Icons.people),
-                text: 'Người mượn',
-                service: BorrowerService.fetchTotalBorrowerCount(),
-              ),
-              GetTotalContainer(
-                icon: Icon(Icons.book),
-                text: 'Số sách',
-                service: BookService.fetchTotalBookCount(),
-              )
-            ],
-          ),
-          Expanded(
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                if (constraints.maxWidth < 600) {
-                  // Nếu màn hình thu nhỏ, hiển thị BookListWidget và BorrowerWidget trong một cột
-                  return Column(
-                    children: [
-                      Expanded(child: BookListWidget()),
-                      SizedBox(height: 20),
-                      Expanded(child: BorrowerListWidget()),
-                    ],
-                  );
-                } else {
-                  // Nếu màn hình đủ rộng, hiển thị BookListWidget và BorrowerWidget trong hai cột song song
-                  return Row(
-                    children: [
-                      Expanded(child: BookListWidget()),
-                      SizedBox(width: 20),
-                      Expanded(child: BorrowerListWidget()),
-                    ],
-                  );
-                }
+    return Container(
+      // ...
+      child: FutureBuilder<List<Borrower>>(
+        future: BorrowerService.fetchAll(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            final borrowers = snapshot.data ?? [];
+
+            return ListView.builder(
+              itemCount: borrowers.length,
+              itemBuilder: (context, index) {
+                final borrower = borrowers[index];
+
+                // Hiển thị thông tin người mượn
+                return Column(
+                  children: [
+                    // ... Hiển thị thông tin người mượn ...
+
+                    // Hiển thị danh sách sách mà người mượn mượn
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: borrower.borrowedBooks?.length ?? 0,
+                      itemBuilder: (context, bookIndex) {
+                        final borrowedBook = borrower.borrowedBooks![bookIndex];
+
+                        // Hiển thị thông tin sách mượn
+                        return ListTile(
+                          title: Text(borrowedBook.title),
+                          subtitle: Text(borrowedBook.author ?? ''),
+                          // ... Hiển thị các thông tin khác về sách mượn ...
+                        );
+                      },
+                    ),
+
+                    // ...
+                  ],
+                );
               },
-            ),
-          )
-        ],
-      )),
+            );
+          }
+        },
+      ),
     );
   }
 }

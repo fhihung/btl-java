@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../models/borrows.dart';
 import '../../services/borrow_service.dart';
@@ -49,51 +49,53 @@ class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
       }
     }
   }
+
   Future<void> _selectBorrowDate(BuildContext context) async {
-  final DateTime? pickedDate = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2100),
-  );
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
 
-  if (pickedDate != null) {
-    setState(() {
-      _borrowDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
-    });
+    if (pickedDate != null) {
+      setState(() {
+        _borrowDateController.text =
+            DateFormat('yyyy-MM-dd').format(pickedDate);
+      });
+    }
   }
-}
 
-Future<void> _selectDueDate(BuildContext context) async {
-  final DateTime? pickedDate = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2100),
-  );
+  Future<void> _selectDueDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
 
-  if (pickedDate != null) {
-    setState(() {
-      _dueDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
-    });
+    if (pickedDate != null) {
+      setState(() {
+        _dueDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+      });
+    }
   }
-}
 
-Future<void> _selectReturnDate(BuildContext context) async {
-  final DateTime? pickedDate = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2100),
-  );
+  Future<void> _selectReturnDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
 
-  if (pickedDate != null) {
-    setState(() {
-      _returnDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
-    });
+    if (pickedDate != null) {
+      setState(() {
+        _returnDateController.text =
+            DateFormat('yyyy-MM-dd').format(pickedDate);
+      });
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +138,8 @@ Future<void> _selectReturnDate(BuildContext context) async {
                   }
                   return null;
                 },
+                readOnly: true,
+                onTap: () => _selectBorrowDate(context),
               ),
               TextFormField(
                 controller: _dueDateController,
@@ -146,10 +150,14 @@ Future<void> _selectReturnDate(BuildContext context) async {
                   }
                   return null;
                 },
+                readOnly: true,
+                onTap: () => _selectDueDate(context),
               ),
               TextFormField(
                 controller: _returnDateController,
                 decoration: InputDecoration(labelText: 'Return Date'),
+                readOnly: true,
+                onTap: () => _selectReturnDate(context),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(

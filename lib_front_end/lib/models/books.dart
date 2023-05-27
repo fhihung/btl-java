@@ -1,3 +1,5 @@
+import 'borrowers.dart';
+
 class Book {
   int? id;
   final String title;
@@ -6,6 +8,7 @@ class Book {
   int? publicationYear;
   int? quantity;
   String? description;
+  List<Borrower>? borrowers; // Danh sách người mượn
 
   Book({
     this.id,
@@ -15,6 +18,7 @@ class Book {
     this.publicationYear,
     this.quantity,
     this.description,
+    this.borrowers,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) {
@@ -28,6 +32,7 @@ class Book {
       description: json['description'],
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
