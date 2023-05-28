@@ -6,7 +6,7 @@ import '../../models/borrowers.dart';
 import '../../services/borrow_service.dart';
 import '../../services/borrower_service.dart';
 import '../../widgets/constants.dart';
-import 'borrower_scaffold.dart';
+import 'search_borrower_screen.dart';
 
 class BorrowerListWidget extends StatefulWidget {
   @override
@@ -253,7 +253,7 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return BorrowerListScreen();
+                                return SearchBorrowerScreen();
                               },
                             ),
                           );

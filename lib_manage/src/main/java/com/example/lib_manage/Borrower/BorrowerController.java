@@ -31,6 +31,25 @@ public class BorrowerController {
         return BorrowerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Borrower not found"));
     }
+    @GetMapping("/search/name/{name}")
+    public List<Borrower> searchBorrowersByName(@PathVariable String name) {
+        return BorrowerRepository.findByFullNameContainingIgnoreCase(name);
+    }
+
+    @GetMapping("/search/address/{address}")
+    public List<Borrower> searchBorrowersByAddress(@PathVariable String address) {
+        return BorrowerRepository.findByAddressContainingIgnoreCase(address);
+    }
+
+    @GetMapping("/search/email/{email}")
+    public List<Borrower> searchBorrowersByEmail(@PathVariable String email) {
+        return BorrowerRepository.findByEmailContainingIgnoreCase(email);
+    }
+
+    @GetMapping("/search/phone/{phone}")
+    public List<Borrower> searchBorrowersByPhone(@PathVariable String phone) {
+        return BorrowerRepository.findByPhoneNumberContainingIgnoreCase(phone);
+    }
 //    @GetMapping("/search/id/{id}")
 //    public List<Borrower> searchBooksByID(@PathVariable Long id) {
 //        return BorrowerRepository.findByIdContainingIgnoreCase(id);
@@ -78,13 +97,13 @@ public class BorrowerController {
         BorrowerRepository.delete(borrower);
     }
     @PutMapping("/update/{id}")
-    public  Borrower updateBorrower(@PathVariable Long id , @Valid @RequestBody Borrower updateBorrower){
+    public Borrower updateBorrower(@PathVariable Long id, @Valid @RequestBody Borrower updatedBorrower) {
         Borrower borrower = BorrowerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Borrower not found"));
-        borrower.setAddress(updateBorrower.getAddress());
-        borrower.setFullName(updateBorrower.getFullName());
-        borrower.setPhoneNumber(updateBorrower.getPhoneNumber());
-        borrower.setEmail(borrower.getEmail());
+        borrower.setFullName(updatedBorrower.getFullName());
+        borrower.setAddress(updatedBorrower.getAddress());
+        borrower.setPhoneNumber(updatedBorrower.getPhoneNumber());
+        borrower.setEmail(updatedBorrower.getEmail());
 
         return BorrowerRepository.save(borrower);
     }
