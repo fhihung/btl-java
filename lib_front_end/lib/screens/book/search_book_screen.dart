@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:lib_app/widgets/constants.dart';
 import 'package:lib_app/widgets/show_info_dialog.dart';
 
@@ -100,70 +102,60 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Thông tin chi tiết'),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.close_rounded))
+                      Text(
+                        'Information',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w400),
+                      ),
                     ],
                   ),
-                  TextField(
-                    readOnly: !isReadOnly,
-                    controller: _titleController,
-                    decoration: InputDecoration(
-                      labelText: 'Title',
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text('Edit'),
+                      Switch(
+                        value: isReadOnly,
+                        onChanged: (bool newValue) {
+                          setState(() {
+                            isReadOnly = newValue;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  TextField(
+                  RoundedTextField(
+                      hintText: 'Title',
+                      readOnly: !isReadOnly,
+                      controller: _titleController),
+                  RoundedTextField(
                     readOnly: !isReadOnly,
                     controller: _authorController,
-                    decoration: InputDecoration(
-                      labelText: 'Author',
-                    ),
+                    hintText: 'Author',
                   ),
-                  TextField(
+                  RoundedTextField(
                     readOnly: !isReadOnly,
                     controller: _publisherController,
-                    decoration: InputDecoration(
-                      labelText: 'Publisher',
-                    ),
+                    hintText: 'Publisher',
                   ),
-                  TextField(
+                  RoundedTextField(
                     readOnly: !isReadOnly,
                     controller: _publicationYearController,
-                    decoration: InputDecoration(
-                      labelText: 'PublicationYear',
-                    ),
+                    hintText: 'PublicationYear',
                   ),
-                  TextField(
+                  RoundedTextField(
                     readOnly: !isReadOnly,
                     controller: _quantityController,
-                    decoration: InputDecoration(
-                      labelText: 'Quantity',
-                    ),
+                    hintText: 'Quantity',
                   ),
-                  TextField(
+                  RoundedTextField(
                     readOnly: !isReadOnly,
                     controller: _descriptionController,
-                    decoration: InputDecoration(
-                      labelText: 'Description',
-                    ),
+                    hintText: 'Description',
                   ),
                 ],
               ),
               actions: [
-                Text('Edit'),
-                Switch(
-                  value: isReadOnly,
-                  onChanged: (bool newValue) {
-                    setState(() {
-                      isReadOnly = newValue;
-                    });
-                  },
-                ),
                 TextButton(
                   child: Text('Cancel'),
                   onPressed: () {
@@ -364,6 +356,45 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedTextField extends StatelessWidget {
+  String hintText;
+  bool? readOnly;
+  TextEditingController controller;
+  RoundedTextField({
+    Key? key,
+    required this.hintText,
+    this.readOnly,
+    required this.controller,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(5),
+      child: TextField(
+        maxLines: null,
+        readOnly: readOnly!,
+        controller: controller,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              color: primaryBlack,
+              width: 2.0,
+            ),
+          ),
+          hintText: hintText,
+          prefixIconColor: primaryBlack,
+          // fillColor: primaryBlack,
         ),
       ),
     );

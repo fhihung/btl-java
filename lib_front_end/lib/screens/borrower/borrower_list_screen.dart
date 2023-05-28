@@ -158,16 +158,7 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                                 ),
                               ),
                             ),
-                            // Expanded(
-                            //   flex: 2,
-                            //   child: Tooltip(
-                            //     message: borrower.email,
-                            //     child: Text(
-                            //       '${borrower.email}',
-                            //       overflow: TextOverflow.ellipsis,
-                            //     ),
-                            //   ),
-                            // ),
+                        
                           ],
                         ),
                       );

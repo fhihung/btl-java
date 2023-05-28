@@ -6,6 +6,7 @@ import '../../models/borrowers.dart';
 import '../../services/borrow_service.dart';
 import '../../services/borrower_service.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/rounded_textfield.dart';
 import 'book_borrow_by_id_screen.dart';
 
 enum SearchOption { Name, Address, Phone, Email }
@@ -89,60 +90,83 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Edit Borrower'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Name',
+        bool isReadOnly = false;
+
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Information',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    ),
+                  ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('Edit'),
+                    Switch(
+                      value: isReadOnly,
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          isReadOnly = newValue;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                RoundedTextField(
+                  readOnly: !isReadOnly,
+                  controller: _nameController,
+                  hintText: 'Name',
+                ),
+                RoundedTextField(
+                  readOnly: !isReadOnly,
+                  controller: _addressController,
+                  hintText: 'Địa chỉ',
+                ),
+                RoundedTextField(
+                  readOnly: !isReadOnly,
+                  controller: _phoneController,
+                  hintText: 'Phone',
+                ),
+                RoundedTextField(
+                  readOnly: !isReadOnly,
+                  controller: _emailController,
+                  hintText: 'Email',
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
-              TextField(
-                controller: _addressController,
-                decoration: InputDecoration(
-                  labelText: 'Địa chỉ',
-                ),
-              ),
-              TextField(
-                controller: _phoneController,
-                decoration: InputDecoration(
-                  labelText: 'Phone',
-                ),
-              ),
-              TextField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                ),
+              ElevatedButton(
+                child: Text('Save'),
+                onPressed: () async {
+                  final updatedBorrower = Borrower(
+                    id: borrower.id,
+                    fullName: _nameController.text,
+                    address: _addressController.text,
+                    phoneNumber: _phoneController.text,
+                    email: _emailController.text,
+                  );
+                  await _updateBorrower(updatedBorrower);
+                  Navigator.of(context).pop();
+                },
               ),
             ],
-          ),
-          actions: [
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ElevatedButton(
-              child: Text('Save'),
-              onPressed: () async {
-                final updatedBorrower = Borrower(
-                  id: borrower.id,
-                  fullName: _nameController.text,
-                  address: _addressController.text,
-                  phoneNumber: _phoneController.text,
-                  email: _emailController.text,
-                );
-                await _updateBorrower(updatedBorrower);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
+          );
+        });
       },
     );
   }
@@ -304,11 +328,11 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
                               itemBuilder: (context) {
                                 return [
                                   PopupMenuItem<int>(
-                                      value: 0, child: Text("Sách đang mượn")),
-                                  PopupMenuItem<int>(
-                                    value: 1,
-                                    child: Text("Sửa"),
+                                    value: 0,
+                                    child: Text("Thông tin chi tiết"),
                                   ),
+                                  PopupMenuItem<int>(
+                                      value: 1, child: Text("Sách đang mượn")),
                                   PopupMenuItem<int>(
                                     value: 2,
                                     child: Text("Xóa"),
@@ -317,11 +341,12 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
                               },
                               onSelected: (value) {
                                 if (value == 0) {
-                                  _showBooksScreen(borrower.id!);
+                                  _showEditDialog(borrower);
+
                                   // _showBorrowedBook(borrower.id!);
                                 }
                                 if (value == 1) {
-                                  _showEditDialog(borrower);
+                                  _showBooksScreen(borrower.id!);
                                 }
                                 if (value == 2) {
                                   _deleteBorrower(borrower.id!);
