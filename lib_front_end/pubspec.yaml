@@ -40,6 +40,7 @@ dependencies:
   sidebarx: ^0.15.0
   separated_row: ^2.0.0
   intl: ^0.18.1
+  flutter_typeahead: ^4.5.0
 
 dev_dependencies:
   flutter_test:

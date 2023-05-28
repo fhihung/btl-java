@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+import '../../models/books.dart';
 import '../../models/borrows.dart';
+import '../../services/book_services.dart';
 import '../../services/borrow_service.dart';
 
 class BorrowRequestScreen extends StatefulWidget {
@@ -11,7 +14,7 @@ class BorrowRequestScreen extends StatefulWidget {
 
 class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _bookIdController = TextEditingController();
+  final _titleController = TextEditingController();
   final _borrowerIdController = TextEditingController();
   final _borrowDateController = TextEditingController();
   final _dueDateController = TextEditingController();
@@ -19,7 +22,7 @@ class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
 
   @override
   void dispose() {
-    _bookIdController.dispose();
+    _titleController.dispose();
     _borrowerIdController.dispose();
     _borrowDateController.dispose();
     _dueDateController.dispose();
@@ -29,8 +32,12 @@ class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
 
   void _submitRequest() async {
     if (_formKey.currentState!.validate()) {
+      final selectedBook = _titleController.text;
+      final books = await _loadBooks();
+      final book = books.firstWhere((book) => book.title == selectedBook);
+
       final borrow = Borrow(
-        bookId: int.parse(_bookIdController.text),
+        bookId: book.id!,
         borrowerId: int.parse(_borrowerIdController.text),
         borrowDate: _borrowDateController.text,
         dueDate: _dueDateController.text,
@@ -109,12 +116,36 @@ class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                controller: _bookIdController,
-                decoration: InputDecoration(labelText: 'Book ID'),
+              TypeAheadFormField(
+                textFieldConfiguration: TextFieldConfiguration(
+                  controller: _titleController,
+                  decoration: InputDecoration(labelText: 'Book Title'),
+                ),
+                suggestionsCallback: (pattern) async {
+                  final List<Book> books = await _loadBooks();
+                  final List<String> titles = books
+                      .where((book) => book.title
+                          .toLowerCase()
+                          .contains(pattern.toLowerCase()))
+                      .map((book) => '${book.id} - ${book.title}')
+                      .toList();
+                  return titles;
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    tileColor: Colors.white,
+                    title: Text(
+                      suggestion,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  _titleController.text = suggestion.split(' - ')[1];
+                },
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter the book ID';
+                    return 'Please enter the book title';
                   }
                   return null;
                 },
@@ -122,6 +153,7 @@ class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
               TextFormField(
                 controller: _borrowerIdController,
                 decoration: InputDecoration(labelText: 'Borrower ID'),
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter the borrower ID';
@@ -131,33 +163,54 @@ class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
               ),
               TextFormField(
                 controller: _borrowDateController,
-                decoration: InputDecoration(labelText: 'Borrow Date'),
+                decoration: InputDecoration(
+                  labelText: 'Borrow Date',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _selectBorrowDate(context);
+                    },
+                    icon: Icon(Icons.calendar_today),
+                  ),
+                ),
+                readOnly: true,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter the borrow date';
+                    return 'Please select the borrow date';
                   }
                   return null;
                 },
-                readOnly: true,
-                onTap: () => _selectBorrowDate(context),
               ),
               TextFormField(
                 controller: _dueDateController,
-                decoration: InputDecoration(labelText: 'Due Date'),
+                decoration: InputDecoration(
+                  labelText: 'Due Date',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _selectDueDate(context);
+                    },
+                    icon: Icon(Icons.calendar_today),
+                  ),
+                ),
+                readOnly: true,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter the due date';
+                    return 'Please select the due date';
                   }
                   return null;
                 },
-                readOnly: true,
-                onTap: () => _selectDueDate(context),
               ),
               TextFormField(
                 controller: _returnDateController,
-                decoration: InputDecoration(labelText: 'Return Date'),
+                decoration: InputDecoration(
+                  labelText: 'Return Date',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _selectReturnDate(context);
+                    },
+                    icon: Icon(Icons.calendar_today),
+                  ),
+                ),
                 readOnly: true,
-                onTap: () => _selectReturnDate(context),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
@@ -169,5 +222,11 @@ class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
         ),
       ),
     );
+  }
+
+  Future<List<Book>> _loadBooks() async {
+    // Replace this with your own function to fetch the list of books
+    final books = await BookService.fetchAll();
+    return books;
   }
 }
