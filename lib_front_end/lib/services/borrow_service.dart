@@ -115,4 +115,18 @@ class BorrowService {
       throw Exception('Failed to return book');
     }
   }
+
+  static Future<List<Book>> getBooksByBorrower(int borrowerId) async {
+    final url = Uri.parse('$baseUrl/books-by-borrower/$borrowerId');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as List;
+      final books = data.map((item) => Book.fromJson(item)).toList();
+      return books;
+    } else {
+      throw Exception('Failed to fetch books');
+    }
+  }
+
 }

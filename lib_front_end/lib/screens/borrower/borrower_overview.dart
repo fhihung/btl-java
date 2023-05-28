@@ -25,25 +25,21 @@ class BorrowerInOverView extends StatelessWidget {
                 Expanded(
                     flex: 2,
                     child: Container(
-                      margin:
-                          EdgeInsets.only(left: 5, bottom: 10),
+                      margin: EdgeInsets.only(left: 5, bottom: 10),
                       child: Text(
                         'Books List',
                         style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600),
+                            fontSize: 24, fontWeight: FontWeight.w600),
                       ),
                     )),
                 Expanded(
                     flex: 1,
                     child: Container(
-                      margin:
-                          EdgeInsets.only(left: 5, bottom: 10),
+                      margin: EdgeInsets.only(left: 5, bottom: 10),
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.all(5),
-                            side:
-                                BorderSide(color: Colors.black)),
+                            side: BorderSide(color: Colors.black)),
                         onPressed: () {},
                         child: Text(
                           'Add New Book',

@@ -117,17 +117,30 @@ public class BorrowController {
 
         return BorrowRepository.save(existingBorrow);
     }
-    @GetMapping("/books-by-borrower/{borrowerId}")
-    public List<Book> getBooksByBorrower(@PathVariable Long borrowerId) {
-        List<Borrow> borrows = BorrowRepository.findByBorrowerId(borrowerId);
-        List<Book> books = new ArrayList<>();
+//    @GetMapping("/books-by-borrower/{borrowerId}")
+//    public List<Book> getBooksByBorrower(@PathVariable Long borrowerId) {
+//        List<Borrow> borrows = BorrowRepository.findByBorrowerId(borrowerId);
+//        List<Book> books = new ArrayList<>();
+//
+//        for (Borrow borrow : borrows) {
+//            books.add(borrow.getBook());
+//        }
+//
+//        return books;
+//    }
+@GetMapping("/books-by-borrower/{borrowerId}")
+public List<Book> getBooksByBorrower(@PathVariable Long borrowerId) {
+    List<Borrow> borrows = BorrowRepository.findByBorrowerId(borrowerId);
+    List<Book> books = new ArrayList<>();
 
-        for (Borrow borrow : borrows) {
+    for (Borrow borrow : borrows) {
+        if (borrow.getReturnDate() == null) {
             books.add(borrow.getBook());
         }
-
-        return books;
     }
+
+    return books;
+}
 
 //    @PostMapping("/returnBook") // Trả sách
 //    public void returnBook(@RequestBody @Valid Borrow borrow) {

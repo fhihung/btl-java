@@ -7,6 +7,7 @@ import 'book/book_list_screen.dart';
 import 'borrow/list_screen.dart';
 import 'borrow/request_borrow_screen.dart';
 import 'borrower/borrower_list_screen.dart';
+import 'borrower/tempingtest.dart';
 import 'overview_screen.dart';
 import 'book/search_book_screen.dart';
 
@@ -126,7 +127,7 @@ class ScreensExample extends StatelessWidget {
             return BorrowRequestScreen();
 
           default:
-            return DashBoardScreen();
+            return BooksByBorrowerScreen();
         }
       },
     );

@@ -6,7 +6,46 @@ import '../../services/borrow_service.dart';
 import '../../services/borrower_service.dart';
 import '../../widgets/constants.dart';
 
-class BorrowerListWidget extends StatelessWidget {
+class BorrowerListWidget extends StatefulWidget {
+  @override
+  State<BorrowerListWidget> createState() => _BorrowerListWidgetState();
+}
+
+class _BorrowerListWidgetState extends State<BorrowerListWidget> {
+  void _showBooksDialog(int borrowerId) async {
+    try {
+      final books = await BorrowService.getBooksByBorrower(borrowerId);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Books Borrowed'),
+            content: ListView.builder(
+              itemCount: books.length,
+              itemBuilder: (context, index) {
+                final book = books[index];
+                return ListTile(
+                  title: Text(book.title),
+                  subtitle: Text(book.author ?? ''),
+                );
+              },
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,8 +64,6 @@ class BorrowerListWidget extends StatelessWidget {
             return Text('Error: ${snapshot.error}');
           } else {
             final borrowers = snapshot.data ?? [];
-            // final limitedBorrowers =
-            //     borrowers.take(10).toList(); // Lấy chỉ 10 người mượn
 
             return Column(
               children: [
@@ -170,7 +207,17 @@ class BorrowerListWidget extends StatelessWidget {
                               child: PopupMenuButton(
                                 icon: Icon(Icons.more_horiz),
                                 itemBuilder: (context) {
-                                  return [ ];
+                                  return [
+                                    PopupMenuItem(
+                                      child: ListTile(
+                                        leading: Icon(Icons.book),
+                                        title: Text('Books Borrowed'),
+                                      ),
+                                      onTap: () {
+                                        _showBooksDialog(borrower.id!);
+                                      },
+                                    ),
+                                  ];
                                 },
                               ),
                             ),

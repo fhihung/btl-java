@@ -16,6 +16,21 @@ class BookService {
       throw Exception('Failed to fetch books');
     }
   }
+ 
+static Future<Book> fetchBookById(int id) async {
+  final url = '$baseUrl/$id'; // Thay baseUrl bằng URL của API getBookById của bạn
+ 
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final book = Book.fromJson(jsonData);
+      return book;
+    } else {
+      throw Exception('Failed to fetch book');
+    }
+  } 
+
+  
 
   static Future<int> fetchTotalBookCount() async {
     final response = await http.get(Uri.parse('$baseUrl/count'));
@@ -38,6 +53,7 @@ class BookService {
       throw Exception('Failed to search books by title');
     }
   }
+
 
   static Future<List<Book>> searchByAuthor(String author) async {
     final response =
