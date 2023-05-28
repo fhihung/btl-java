@@ -13,6 +13,5 @@ public interface BorrowerRepository extends JpaRepository<Borrower, Long> {
     List<Borrower> findByFullNameContainingIgnoreCase(String name);
     List<Borrower> findByAddressContainingIgnoreCase(String address);
     List<Borrower> findByEmailContainingIgnoreCase(String email);
-
     List<Borrower> findByPhoneNumberContainingIgnoreCase(String phone);
 }

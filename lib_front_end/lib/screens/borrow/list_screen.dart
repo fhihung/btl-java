@@ -60,7 +60,7 @@ class _BorrowListWidgetState extends State<BorrowListWidget> {
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               padding: EdgeInsets.all(5),
-                              side: BorderSide(color: Colors.black),
+                              side: BorderSide(color: primaryBlack),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -74,7 +74,7 @@ class _BorrowListWidgetState extends State<BorrowListWidget> {
                             },
                             child: Text(
                               'Add New Borrow',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: primaryBlack),
                             ),
                           ),
                         ),

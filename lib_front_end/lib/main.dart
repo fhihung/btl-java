@@ -24,6 +24,7 @@ class SidebarXExampleApp extends StatelessWidget {
       title: 'SidebarX Example',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primarySwatch: primaryBlack,
         primaryColor: primaryColor,
         canvasColor: canvasColor,
         scaffoldBackgroundColor: scaffoldBackgroundColor,
@@ -59,7 +60,7 @@ class SidebarXExampleApp extends StatelessWidget {
                       },
                       icon: const Icon(
                         Icons.menu,
-                        color: Colors.black,
+                        color: primaryBlack,
                       ),
                     ),
                   )

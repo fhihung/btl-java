@@ -55,7 +55,7 @@ class BookListWidget extends StatelessWidget {
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               padding: EdgeInsets.all(5),
-                              side: BorderSide(color: Colors.black),
+                              side: BorderSide(color: primaryBlack),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -69,7 +69,7 @@ class BookListWidget extends StatelessWidget {
                             },
                             child: Text(
                               'Add New Book',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: primaryBlack),
                             ),
                           ),
                         ),
@@ -85,7 +85,6 @@ class BookListWidget extends StatelessWidget {
                       Expanded(flex: 2, child: Text('Tên')),
                       Expanded(flex: 2, child: Text('Tác giả')),
                       Expanded(flex: 2, child: Text('Số lượng')),
-                      Expanded(flex: 2, child: Text('Khác')),
                     ],
                   ),
                 ),
@@ -103,17 +102,6 @@ class BookListWidget extends StatelessWidget {
                             Expanded(flex: 2, child: Text(book.title)),
                             Expanded(flex: 2, child: Text('${book.author}')),
                             Expanded(flex: 2, child: Text('${book.quantity}')),
-                            Expanded(
-                              flex: 2,
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.more_horiz),
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       );
@@ -138,7 +126,7 @@ class BookListWidget extends StatelessWidget {
                         },
                         child: Text(
                           'Xem chi tiết',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: primaryBlack),
                         ),
                       ),
                     ),

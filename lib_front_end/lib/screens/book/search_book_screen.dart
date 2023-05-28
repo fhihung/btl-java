@@ -91,73 +91,105 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Edit Book'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                ),
+        bool isReadOnly = false;
+
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Thông tin chi tiết'),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.close_rounded))
+                    ],
+                  ),
+                  TextField(
+                    readOnly: !isReadOnly,
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      labelText: 'Title',
+                    ),
+                  ),
+                  TextField(
+                    readOnly: !isReadOnly,
+                    controller: _authorController,
+                    decoration: InputDecoration(
+                      labelText: 'Author',
+                    ),
+                  ),
+                  TextField(
+                    readOnly: !isReadOnly,
+                    controller: _publisherController,
+                    decoration: InputDecoration(
+                      labelText: 'Publisher',
+                    ),
+                  ),
+                  TextField(
+                    readOnly: !isReadOnly,
+                    controller: _publicationYearController,
+                    decoration: InputDecoration(
+                      labelText: 'PublicationYear',
+                    ),
+                  ),
+                  TextField(
+                    readOnly: !isReadOnly,
+                    controller: _quantityController,
+                    decoration: InputDecoration(
+                      labelText: 'Quantity',
+                    ),
+                  ),
+                  TextField(
+                    readOnly: !isReadOnly,
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      labelText: 'Description',
+                    ),
+                  ),
+                ],
               ),
-              TextField(
-                controller: _authorController,
-                decoration: InputDecoration(
-                  labelText: 'Author',
+              actions: [
+                Text('Edit'),
+                Switch(
+                  value: isReadOnly,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      isReadOnly = newValue;
+                    });
+                  },
                 ),
-              ),
-              TextField(
-                controller: _publisherController,
-                decoration: InputDecoration(
-                  labelText: 'Publisher',
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-              TextField(
-                controller: _publicationYearController,
-                decoration: InputDecoration(
-                  labelText: 'PublicationYear',
+                ElevatedButton(
+                  child: Text('Save'),
+                  onPressed: () async {
+                    final updatedBook = Book(
+                      id: book.id,
+                      title: _titleController.text,
+                      author: _authorController.text,
+                      publisher: _publisherController.text,
+                      publicationYear:
+                          int.parse(_publicationYearController.text),
+                      quantity: int.parse(_quantityController.text),
+                      description: _descriptionController.text,
+                    );
+                    await _updateBook(updatedBook);
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-              TextField(
-                controller: _quantityController,
-                decoration: InputDecoration(
-                  labelText: 'Quantity',
-                ),
-              ),
-              TextField(
-                controller: _descriptionController,
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ElevatedButton(
-              child: Text('Save'),
-              onPressed: () async {
-                final updatedBook = Book(
-                  id: book.id,
-                  title: _titleController.text,
-                  author: _authorController.text,
-                  publisher: _publisherController.text,
-                  publicationYear: int.parse(_publicationYearController.text),
-                  quantity: int.parse(_quantityController.text),
-                  description: _descriptionController.text,
-                );
-                await _updateBook(updatedBook);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+              ],
+            );
+          },
         );
       },
     );
@@ -167,11 +199,15 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Danh sách tài liệu',
+          style: TextStyle(color: primaryBlack),
+        ),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
             size: 22,
-            color: Colors.black,
+            color: primaryBlack,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -201,7 +237,7 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide(
-                          color: Colors.black,
+                          color: primaryBlack,
                           width: 2.0,
                         ),
                       ),
@@ -213,8 +249,8 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                       prefixIcon: Container(
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           child: Icon(Icons.search)),
-                      prefixIconColor: Colors.black,
-                      // fillColor: Colors.black,
+                      prefixIconColor: primaryBlack,
+                      // fillColor: primaryBlack,
                     ),
                     onChanged: (value) {
                       final query = _searchController.text;
@@ -254,10 +290,10 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
               child: Row(
                 children: <Widget>[
                   Expanded(child: Text('ID')),
-                  Expanded(flex: 3, child: Text('Tên')),
-                  Expanded(flex: 2, child: Text('Tác giả')),
-                  Expanded(flex: 2, child: Text('Số lượng')),
-                  Expanded(flex: 1, child: Text('Khác')),
+                  Expanded(flex: 3, child: Text('Title')),
+                  Expanded(flex: 2, child: Text('Author')),
+                  Expanded(flex: 2, child: Text('Quantity')),
+                  Expanded(flex: 1, child: Text('More')),
                 ],
               ),
             ),
@@ -289,23 +325,18 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                                         return [
                                           PopupMenuItem<int>(
                                               value: 0,
-                                              child:
-                                                  Text("Thông tin chi tiết")),
-                                          PopupMenuItem<int>(
-                                            value: 1,
-                                            child: Text("Sửa"),
-                                          ),
+                                              child: Text("More Information")),
                                           PopupMenuItem<int>(
                                             value: 2,
-                                            child: Text("Xóa"),
+                                            child: Text("Delete"),
                                           ),
                                         ];
                                       },
                                       onSelected: (value) {
-                                        if (value == 0) {}
-                                        if (value == 1) {
+                                        if (value == 0) {
                                           _showEditDialog(book);
                                         }
+
                                         if (value == 2) {
                                           _deleteBook(book.id!);
                                         }

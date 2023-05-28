@@ -14,47 +14,6 @@ class BorrowerListWidget extends StatefulWidget {
 }
 
 class _BorrowerListWidgetState extends State<BorrowerListWidget> {
-  void _showBooksDialog(BuildContext context, int borrowerId) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Books Borrowed'),
-          content: FutureBuilder<List<Book>>(
-            future: BorrowService.getBooksByBorrower(borrowerId),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                final books = snapshot.data ?? [];
-                return ListView.builder(
-                  itemCount: books.length,
-                  itemBuilder: (context, index) {
-                    final book = books[index];
-                    return ListTile(
-                      title: Text(book.title),
-                      subtitle: Text(book.author ?? ''),
-                    );
-                  },
-                );
-              }
-            },
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Sử dụng context để đóng dialog
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -82,7 +41,7 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                   child: Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: Container(
                           margin: EdgeInsets.only(left: 5, bottom: 10),
                           child: Text(
@@ -95,13 +54,13 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: Container(
                           margin: EdgeInsets.only(left: 5, bottom: 10),
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               padding: EdgeInsets.all(5),
-                              side: BorderSide(color: Colors.black),
+                              side: BorderSide(color: primaryBlack),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -115,7 +74,7 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                             },
                             child: Text(
                               'Add New Borrower',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: primaryBlack),
                             ),
                           ),
                         ),
@@ -133,24 +92,20 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                       ),
                       Expanded(
                         flex: 2,
-                        child: Text('Tên'),
+                        child: Text('Name'),
                       ),
                       Expanded(
                         flex: 2,
-                        child: Text('Địa chỉ'),
+                        child: Text('Address'),
                       ),
                       Expanded(
                         flex: 2,
-                        child: Text('SĐT'),
+                        child: Text('Phone'),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Text('Email'),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text('Khác'),
-                      ),
+                      // Expanded(
+                      //   flex: 2,
+                      //   child: Text('Email'),
+                      // ),
                     ],
                   ),
                 ),
@@ -203,39 +158,16 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: Tooltip(
-                                message: borrower.email,
-                                child: Text(
-                                  '${borrower.email}',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Row(
-                                children: [
-                                  PopupMenuButton(
-                                    icon: Icon(Icons.more_horiz),
-                                    itemBuilder: (context) {
-                                      return [
-                                        PopupMenuItem(
-                                          value: 0,
-                                          child: Text("Sách đang mượn"),
-                                        ),
-                                      ];
-                                    },
-                                    onSelected: (value) {
-                                      if (value == 0) {
-                                        _showBooksDialog(context, borrower.id!);
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Expanded(
+                            //   flex: 2,
+                            //   child: Tooltip(
+                            //     message: borrower.email,
+                            //     child: Text(
+                            //       '${borrower.email}',
+                            //       overflow: TextOverflow.ellipsis,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       );
@@ -260,7 +192,7 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                         },
                         child: Text(
                           'Xem chi tiết',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: primaryBlack),
                         ),
                       ),
                     ),

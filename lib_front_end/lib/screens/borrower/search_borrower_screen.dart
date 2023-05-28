@@ -131,11 +131,12 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
               child: Text('Save'),
               onPressed: () async {
                 final updatedBorrower = Borrower(
-                    id: borrower.id,
-                    fullName: _nameController.text,
-                    address: _addressController.text,
-                    phoneNumber: _phoneController.text,
-                    email: _emailController.text);
+                  id: borrower.id,
+                  fullName: _nameController.text,
+                  address: _addressController.text,
+                  phoneNumber: _phoneController.text,
+                  email: _emailController.text,
+                );
                 await _updateBorrower(updatedBorrower);
                 Navigator.of(context).pop();
               },
@@ -171,7 +172,23 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'Danh sách người mượn',
+          style: TextStyle(color: primaryBlack),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 22,
+            color: primaryBlack,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: primaryColor,
+      ),
       body: Container(
           padding: EdgeInsets.all(20),
           margin: EdgeInsets.all(10),
@@ -196,22 +213,22 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide(
-                            color: Colors.black,
+                            color: primaryBlack,
                             width: 2.0,
                           ),
                         ),
                         hintText: _selectedOption == SearchOption.Name
-                            ? 'Title'
+                            ? 'Name'
                             : _selectedOption == SearchOption.Address
-                                ? 'Author'
+                                ? 'Address'
                                 : _selectedOption == SearchOption.Phone
                                     ? 'Phone'
                                     : 'Email',
                         prefixIcon: Container(
                             margin: EdgeInsets.symmetric(horizontal: 5),
                             child: Icon(Icons.search)),
-                        prefixIconColor: Colors.black,
-                        // fillColor: Colors.black,
+                        prefixIconColor: primaryBlack,
+                        // fillColor: primaryBlack,
                       ),
                       onChanged: (value) {
                         final query = _searchController.text;
@@ -301,6 +318,7 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
                               onSelected: (value) {
                                 if (value == 0) {
                                   _showBooksScreen(borrower.id!);
+                                  // _showBorrowedBook(borrower.id!);
                                 }
                                 if (value == 1) {
                                   _showEditDialog(borrower);
@@ -322,38 +340,3 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
     );
   }
 }
-
-/** Expanded(
-                                flex: 2,
-                                child: PopupMenuButton(
-                                  icon: Icon(Icons.more_horiz),
-                                  itemBuilder: (context) {
-                                    return [
-                                      PopupMenuItem<int>(
-                                          value: 0,
-                                          child: Text("Sách đang mượn")),
-                                      // PopupMenuItem<int>(
-                                      //   value: 1,
-                                      //   child: Text("Sửa"),
-                                      // ),
-                                      // PopupMenuItem<int>(
-                                      //   value: 2,
-                                      //   child: Text("Xóa"),
-                                      // ),
-                                    ];
-                                  },
-                                  onSelected: (value) {
-                                    if (value == 0) {
-                                      _showBooksScreen(borrower.id!);
-                                    }
-                                  },
-
-                                  // _showEditDialog(book);
-                                ),
-                                //  GestureDetector(
-                                //   onTap: () {
-                                //     _showBooksScreen(borrower.id!);
-                                //   },
-                                //   child: Icon(Icons.more_horiz),
-                                // ),
-                              ), */

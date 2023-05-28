@@ -87,6 +87,7 @@ class BorrowerService {
       throw Exception('Failed to search borrowers by phone');
     }
   }
+
   static Future<Borrower> updateBorrower(Borrower borrower) async {
     final response = await http.put(
       Uri.parse('$baseUrl/update/${borrower.id}'),
@@ -100,8 +101,9 @@ class BorrowerService {
       throw Exception('Failed to update borrower');
     }
   }
-    static Future<void> delete(int id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/$id'));
+
+  static Future<void> delete(int id) async {
+    final response = await http.delete(Uri.parse('$baseUrl/delete/$id'));
     if (response.statusCode != 200) {
       throw Exception('Failed to delete borrower');
     }

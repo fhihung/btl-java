@@ -117,17 +117,6 @@ public class BorrowController {
 
         return BorrowRepository.save(existingBorrow);
     }
-//    @GetMapping("/books-by-borrower/{borrowerId}")
-//    public List<Book> getBooksByBorrower(@PathVariable Long borrowerId) {
-//        List<Borrow> borrows = BorrowRepository.findByBorrowerId(borrowerId);
-//        List<Book> books = new ArrayList<>();
-//
-//        for (Borrow borrow : borrows) {
-//            books.add(borrow.getBook());
-//        }
-//
-//        return books;
-//    }
 @GetMapping("/books-by-borrower/{borrowerId}")
 public List<Book> getBooksByBorrower(@PathVariable Long borrowerId) {
     List<Borrow> borrows = BorrowRepository.findByBorrowerId(borrowerId);
@@ -141,27 +130,6 @@ public List<Book> getBooksByBorrower(@PathVariable Long borrowerId) {
 
     return books;
 }
-
-//    @PostMapping("/returnBook") // Trả sách
-//    public void returnBook(@RequestBody @Valid Borrow borrow) {
-//        Book book = borrow.getBook();
-//
-//        if (book != null) {
-//            Long bookId = book.getId();
-//            Optional<Book> optionalBook = BookRepository.findById(bookId);
-//
-//            if (optionalBook.isPresent()) {
-//                Book existingBook = optionalBook.get();
-//                int quantity = existingBook.getQuantity();
-//
-//                existingBook.setQuantity(quantity + 1);
-//                BookRepository.save(existingBook);
-//            } else {
-//                throw new IllegalArgumentException("Book not found");
-//            }
-//        }
-//        BorrowRepository.delete(borrow);
-//    }
     @PutMapping("/update/{id}")
     public Borrow updateBorrow(@PathVariable Long id , @Valid @RequestBody Borrow updateBorrow)   {
         Borrow borrow = BorrowRepository.findById(id)
