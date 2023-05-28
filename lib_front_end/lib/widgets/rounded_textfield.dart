@@ -43,3 +43,81 @@ class RoundedTextField extends StatelessWidget {
     );
   }
 }
+
+class RoundedTextFormField extends StatelessWidget {
+  TextEditingController controller;
+  String hintText;
+  TextInputType keyboardType;
+
+  RoundedTextFormField({
+    Key? key,
+    required this.controller,
+    required this.hintText,
+    required this.keyboardType,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hintText,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              color: primaryBlack,
+              width: 2.0,
+            ),
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        maxLines: null,
+        keyboardType: keyboardType,
+      ),
+    );
+  }
+}
+
+class RoundedTextFormFieldCon extends StatelessWidget {
+  TextEditingController controller;
+  String hintText;
+  TextInputType keyboardType;
+
+  RoundedTextFormFieldCon({
+    Key? key,
+    required this.controller,
+    required this.hintText,
+    required this.keyboardType,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hintText,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              color: primaryBlack,
+              width: 2.0,
+            ),
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        maxLines: null,
+        keyboardType: keyboardType,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter a $hintText';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+}

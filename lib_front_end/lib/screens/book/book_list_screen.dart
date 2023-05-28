@@ -82,9 +82,9 @@ class BookListWidget extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Expanded(flex: 1, child: Text('ID')),
-                      Expanded(flex: 2, child: Text('Tên')),
-                      Expanded(flex: 2, child: Text('Tác giả')),
-                      Expanded(flex: 2, child: Text('Số lượng')),
+                      Expanded(flex: 2, child: Text('Name')),
+                      Expanded(flex: 2, child: Text('Author')),
+                      Expanded(flex: 1, child: Text('Quantity')),
                     ],
                   ),
                 ),
@@ -96,12 +96,22 @@ class BookListWidget extends StatelessWidget {
                       final book = books[index];
                       return Container(
                         margin: EdgeInsets.all(5),
-                        child: Row(
+                        child: Column(
                           children: [
-                            Expanded(flex: 1, child: Text('${book.id}')),
-                            Expanded(flex: 2, child: Text(book.title)),
-                            Expanded(flex: 2, child: Text('${book.author}')),
-                            Expanded(flex: 2, child: Text('${book.quantity}')),
+                            Container(
+                              // margin: EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text('${book.id}')),
+                                  Expanded(flex: 2, child: Text(book.title)),
+                                  Expanded(
+                                      flex: 2, child: Text('${book.author}')),
+                                  Expanded(
+                                      flex: 1, child: Text('${book.quantity}')),
+                                ],
+                              ),
+                            ),
+                            Divider(),
                           ],
                         ),
                       );
@@ -119,7 +129,7 @@ class BookListWidget extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return BookSearchScreen();
+                                return SearchBookScreen();
                               },
                             ),
                           );

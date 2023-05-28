@@ -21,12 +21,12 @@ class DashBoardScreen extends StatelessWidget {
               children: [
                 GetTotalContainer(
                   icon: Icon(Icons.people),
-                  text: 'Người mượn',
+                  text: 'Total Borrower',
                   service: BorrowerService.fetchTotalBorrowerCount(),
                 ),
                 GetTotalContainer(
                   icon: Icon(Icons.book),
-                  text: 'Số sách',
+                  text: 'Total Book',
                   service: BookService.fetchTotalBookCount(),
                 ),
               ],

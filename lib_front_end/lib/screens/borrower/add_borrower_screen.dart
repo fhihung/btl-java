@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 import '../../models/borrowers.dart';
 import '../../services/borrower_service.dart';
+import '../../widgets/constants.dart';
 
 class AddBorrowerScreen extends StatefulWidget {
   @override
@@ -43,53 +44,128 @@ class _AddBorrowerScreenState extends State<AddBorrowerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Borrower'),
+        backgroundColor: white,
+        title: Text(
+          'Add Borrower',
+          style: TextStyle(color: primaryBlack),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 22,
+            color: primaryBlack,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Container(
+        padding: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                controller: _fullNameController,
-                decoration: InputDecoration(labelText: 'Full Name'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter the borrower\'s full name';
-                  }
-                  return null;
-                },
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: _fullNameController,
+                  decoration: InputDecoration(
+                    hintText: 'Full Name',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: primaryBlack,
+                        width: 2.0,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter the borrower\'s full name';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              TextFormField(
-                controller: _addressController,
-                decoration: InputDecoration(labelText: 'Address'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter the borrower\'s address';
-                  }
-                  return null;
-                },
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: _addressController,
+                  decoration: InputDecoration(
+                    hintText: 'Address',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: primaryBlack,
+                        width: 2.0,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter the borrower\'s address';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              TextFormField(
-                controller: _phoneNumberController,
-                decoration: InputDecoration(labelText: 'Phone Number'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter the borrower\'s phone number';
-                  }
-                  return null;
-                },
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: _phoneNumberController,
+                  decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: primaryBlack,
+                        width: 2.0,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter the borrower\'s phone number';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter the borrower\'s email';
-                  }
-                  return null;
-                },
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: primaryBlack,
+                        width: 2.0,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter the borrower\'s email';
+                    }
+                    return null;
+                  },
+                ),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(

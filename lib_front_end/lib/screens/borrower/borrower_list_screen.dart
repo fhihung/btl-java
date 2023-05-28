@@ -117,48 +117,55 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                       final borrower = borrowers[index];
                       return Container(
                         margin: EdgeInsets.all(5),
-                        child: Row(
+                        child: Column(
                           children: [
-                            Expanded(
-                              flex: 1,
-                              child: Tooltip(
-                                message: borrower.id.toString(),
-                                child: Text(
-                                  borrower.id.toString(),
-                                ),
+                            Container(
+                              margin: EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Tooltip(
+                                      message: borrower.id.toString(),
+                                      child: Text(
+                                        borrower.id.toString(),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Tooltip(
+                                      message: borrower.fullName,
+                                      child: Text(
+                                        borrower.fullName,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Tooltip(
+                                      message: borrower.address,
+                                      child: Text(
+                                        '${borrower.address}',
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Tooltip(
+                                      message: borrower.phoneNumber,
+                                      child: Text(
+                                        '${borrower.phoneNumber}',
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: Tooltip(
-                                message: borrower.fullName,
-                                child: Text(
-                                  borrower.fullName,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Tooltip(
-                                message: borrower.address,
-                                child: Text(
-                                  '${borrower.address}',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Tooltip(
-                                message: borrower.phoneNumber,
-                                child: Text(
-                                  '${borrower.phoneNumber}',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                        
+                            Divider()
                           ],
                         ),
                       );

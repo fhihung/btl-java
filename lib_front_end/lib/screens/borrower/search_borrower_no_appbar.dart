@@ -11,12 +11,12 @@ import 'book_borrow_by_id_screen.dart';
 
 enum SearchOption { Name, Address, Phone, Email }
 
-class SearchBorrowerScreen extends StatefulWidget {
+class SearchBorrowerNoScreen extends StatefulWidget {
   @override
-  State<SearchBorrowerScreen> createState() => _SearchBorrowerScreenState();
+  State<SearchBorrowerNoScreen> createState() => _SearchBorrowerNoScreenState();
 }
 
-class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
+class _SearchBorrowerNoScreenState extends State<SearchBorrowerNoScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<Borrower> _searchResults = [];
   List<List<Book>> booksByBorrower = [];
@@ -196,23 +196,6 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Danh sách người mượn',
-          style: TextStyle(color: primaryBlack),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 22,
-            color: primaryBlack,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        backgroundColor: primaryColor,
-      ),
       body: Container(
           padding: EdgeInsets.all(20),
           margin: EdgeInsets.all(10),
@@ -222,6 +205,13 @@ class _SearchBorrowerScreenState extends State<SearchBorrowerScreen> {
           ),
           child: Column(
             children: [
+              Text(
+                'Find Borrower',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               SizedBox(
                 height: 16,
               ),

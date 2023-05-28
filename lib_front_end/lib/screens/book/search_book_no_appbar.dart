@@ -13,12 +13,12 @@ enum SearchOption {
   Publisher,
 }
 
-class SearchBookScreen extends StatefulWidget {
+class SearchBookNoScreen extends StatefulWidget {
   @override
-  _SearchBookScreenState createState() => _SearchBookScreenState();
+  _SearchBookNoScreenState createState() => _SearchBookNoScreenState();
 }
 
-class _SearchBookScreenState extends State<SearchBookScreen> {
+class _SearchBookNoScreenState extends State<SearchBookNoScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<Book> _searchResults = [];
   SearchOption _selectedOption = SearchOption.Title;
@@ -190,23 +190,6 @@ class _SearchBookScreenState extends State<SearchBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Danh sách tài liệu',
-          style: TextStyle(color: primaryBlack),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 22,
-            color: primaryBlack,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        backgroundColor: primaryColor,
-      ),
       body: Container(
         padding: EdgeInsets.all(20),
         margin: const EdgeInsets.all(10),
@@ -216,6 +199,13 @@ class _SearchBookScreenState extends State<SearchBookScreen> {
         ),
         child: Column(
           children: [
+            Text(
+              'Find Book',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             SizedBox(height: 16.0),
             Row(
               children: [

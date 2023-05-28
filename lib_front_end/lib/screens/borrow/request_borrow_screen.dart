@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:lib_app/widgets/rounded_textfield.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../models/books.dart';
 import '../../models/borrows.dart';
 import '../../services/book_services.dart';
 import '../../services/borrow_service.dart';
+import '../../widgets/constants.dart';
 
 class BorrowRequestScreen extends StatefulWidget {
   @override
@@ -107,110 +110,187 @@ class _BorrowRequestScreenState extends State<BorrowRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Borrow Request'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
+      // appBar: AppBar(
+      //   backgroundColor: white,
+      //   title: Text(
+      //     'Yêu cầu mượn sách',
+      //     style: TextStyle(color: primaryBlack),
+      //   ),
+      // ),
+      // backgroundColor: primaryColor,
+      body: Container(
+        padding: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              TypeAheadFormField(
-                textFieldConfiguration: TextFieldConfiguration(
-                  controller: _titleController,
-                  decoration: InputDecoration(labelText: 'Book Title'),
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  'Borrow Request',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                suggestionsCallback: (pattern) async {
-                  final List<Book> books = await _loadBooks();
-                  final List<String> titles = books
-                      .where((book) => book.title
-                          .toLowerCase()
-                          .contains(pattern.toLowerCase()))
-                      .map((book) => '${book.id} - ${book.title}')
-                      .toList();
-                  return titles;
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    tileColor: Colors.white,
-                    title: Text(
-                      suggestion,
-                      style: TextStyle(color: Colors.black),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TypeAheadFormField(
+                  textFieldConfiguration: TextFieldConfiguration(
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      hintText: 'Book Title',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: primaryBlack,
+                          width: 2.0,
+                        ),
+                      ),
                     ),
-                  );
-                },
-                onSuggestionSelected: (suggestion) {
-                  _titleController.text = suggestion.split(' - ')[1];
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter the book title';
-                  }
-                  return null;
-                },
+                  ),
+                  suggestionsCallback: (pattern) async {
+                    final List<Book> books = await _loadBooks();
+                    final List<String> titles = books
+                        .where((book) => book.title
+                            .toLowerCase()
+                            .contains(pattern.toLowerCase()))
+                        .map((book) => '${book.id} - ${book.title}')
+                        .toList();
+                    return titles;
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      tileColor: Colors.white,
+                      title: Text(
+                        suggestion,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
+                    _titleController.text = suggestion.split(' - ')[1];
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter the book title';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              TextFormField(
+              RoundedTextFormFieldCon(
                 controller: _borrowerIdController,
-                decoration: InputDecoration(labelText: 'Borrower ID'),
+                hintText: 'Borrower ID',
                 keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter the borrower ID';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
-                controller: _borrowDateController,
-                decoration: InputDecoration(
-                  labelText: 'Borrow Date',
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _selectBorrowDate(context);
-                    },
-                    icon: Icon(Icons.calendar_today),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  onTap: () {
+                    _selectBorrowDate(context);
+                  },
+                  controller: _borrowDateController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: primaryBlack,
+                        width: 2.0,
+                      ),
+                    ),
+                    labelText: 'Borrow Date',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _selectBorrowDate(context);
+                      },
+                      icon: Icon(Icons.calendar_today),
+                    ),
                   ),
+                  readOnly: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please select the borrow date';
+                    }
+                    return null;
+                  },
                 ),
-                readOnly: true,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please select the borrow date';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
-                controller: _dueDateController,
-                decoration: InputDecoration(
-                  labelText: 'Due Date',
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _selectDueDate(context);
-                    },
-                    icon: Icon(Icons.calendar_today),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  onTap: () {
+                    _selectBorrowDate(context);
+                  },
+                  controller: _dueDateController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: primaryBlack,
+                        width: 2.0,
+                      ),
+                    ),
+                    labelText: 'Due Date',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _selectDueDate(context);
+                      },
+                      icon: Icon(Icons.calendar_today),
+                    ),
                   ),
+                  readOnly: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please select the due date';
+                    }
+                    return null;
+                  },
                 ),
-                readOnly: true,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please select the due date';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
-                controller: _returnDateController,
-                decoration: InputDecoration(
-                  labelText: 'Return Date',
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _selectReturnDate(context);
-                    },
-                    icon: Icon(Icons.calendar_today),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  onTap: () {
+                    _selectBorrowDate(context);
+                  },
+                  controller: _returnDateController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: primaryBlack,
+                        width: 2.0,
+                      ),
+                    ),
+                    labelText: 'Return Date',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _selectReturnDate(context);
+                      },
+                      icon: Icon(Icons.calendar_today),
+                    ),
                   ),
+                  readOnly: true,
                 ),
-                readOnly: true,
               ),
               SizedBox(height: 16.0),
               ElevatedButton(

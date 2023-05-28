@@ -35,6 +35,9 @@ class SidebarXExampleApp extends StatelessWidget {
             fontWeight: FontWeight.w800,
           ),
         ),
+        dialogTheme: const DialogTheme(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16)))),
       ),
       home: Builder(
         builder: (context) {

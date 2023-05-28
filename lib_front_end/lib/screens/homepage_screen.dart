@@ -4,9 +4,11 @@ import 'package:sidebarx/sidebarx.dart';
 import '../widgets/constants.dart';
 import 'book/add_book_screen.dart';
 
+import 'book/search_book_no_appbar.dart';
 import 'borrow/list_screen.dart';
 import 'borrow/request_borrow_screen.dart';
 import 'borrower/borrower_list_screen.dart';
+import 'borrower/search_borrower_no_appbar.dart';
 import 'borrower/tempingtest.dart';
 import 'overview_screen.dart';
 import 'book/search_book_screen.dart';
@@ -82,20 +84,20 @@ class ExampleSidebarX extends StatelessWidget {
           label: 'Home',
         ),
         const SidebarXItem(
-          icon: Icons.search,
-          label: 'Search',
+          icon: Icons.local_activity_rounded,
+          label: 'Borrow Request',
         ),
         const SidebarXItem(
-          icon: Icons.people,
-          label: 'People',
+          icon: Icons.library_books_sharp,
+          label: 'Borrows List',
         ),
         const SidebarXItem(
-          icon: Icons.favorite,
-          label: 'Search',
+          icon: Icons.menu_book,
+          label: 'Books List',
         ),
         const SidebarXItem(
-          icon: Icons.local_activity,
-          label: 'Borrow',
+          icon: Icons.person,
+          label: 'Borrowers List',
         ),
       ],
     );
@@ -120,14 +122,14 @@ class ScreensExample extends StatelessWidget {
           case 0:
             return DashBoardScreen();
           case 1:
-            return BookSearchScreen();
+            return BorrowRequestScreen();
           case 2:
             return BorrowListWidget();
           case 3:
-            return BorrowRequestScreen();
+            return SearchBookNoScreen();
 
           default:
-            return BooksByBorrowerScreen();
+            return SearchBorrowerNoScreen();
         }
       },
     );

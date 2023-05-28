@@ -6,7 +6,6 @@ class GetTotalContainer extends StatelessWidget {
   Icon icon;
   String text;
   Future<int> service;
-
   GetTotalContainer({
     Key? key,
     required this.icon,
@@ -19,9 +18,10 @@ class GetTotalContainer extends StatelessWidget {
     return FutureBuilder<int>(
       future: service,
       builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
+        // if (snapshot.connectionState == ConnectionState.waiting) {
+        //   return CircularProgressIndicator();
+        // } else
+        if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
           final int count = snapshot.data ?? 0;
@@ -57,7 +57,11 @@ class GetTotalContainer extends StatelessWidget {
                   children: [
                     Container(
                         margin: EdgeInsets.only(top: 10, left: 15),
-                        child: Text(text)),
+                        child: Text(
+                          text,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        )),
                   ],
                 ),
               ],
