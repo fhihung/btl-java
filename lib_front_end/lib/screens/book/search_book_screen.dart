@@ -166,6 +166,9 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+      ),
       body: Container(
         padding: EdgeInsets.all(20),
         margin: const EdgeInsets.all(10),

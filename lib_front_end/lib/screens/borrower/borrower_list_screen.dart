@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lib_app/screens/borrower/add_borrower_screen.dart';
 
+import '../../models/books.dart';
 import '../../models/borrowers.dart';
 import '../../services/borrow_service.dart';
 import '../../services/borrower_service.dart';
 import '../../widgets/constants.dart';
+import 'borrower_scaffold.dart';
 
 class BorrowerListWidget extends StatefulWidget {
   @override
@@ -12,38 +14,45 @@ class BorrowerListWidget extends StatefulWidget {
 }
 
 class _BorrowerListWidgetState extends State<BorrowerListWidget> {
-  void _showBooksDialog(int borrowerId) async {
-    try {
-      final books = await BorrowService.getBooksByBorrower(borrowerId);
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Books Borrowed'),
-            content: ListView.builder(
-              itemCount: books.length,
-              itemBuilder: (context, index) {
-                final book = books[index];
-                return ListTile(
-                  title: Text(book.title),
-                  subtitle: Text(book.author ?? ''),
+  void _showBooksDialog(BuildContext context, int borrowerId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Books Borrowed'),
+          content: FutureBuilder<List<Book>>(
+            future: BorrowService.getBooksByBorrower(borrowerId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                final books = snapshot.data ?? [];
+                return ListView.builder(
+                  itemCount: books.length,
+                  itemBuilder: (context, index) {
+                    final book = books[index];
+                    return ListTile(
+                      title: Text(book.title),
+                      subtitle: Text(book.author ?? ''),
+                    );
+                  },
                 );
+              }
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Sử dụng context để đóng dialog
               },
             ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Close'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    } catch (e) {
-      print('Error: $e');
-    }
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -59,7 +68,9 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
         future: BorrowerService.fetchAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
@@ -204,21 +215,25 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                             ),
                             Expanded(
                               flex: 2,
-                              child: PopupMenuButton(
-                                icon: Icon(Icons.more_horiz),
-                                itemBuilder: (context) {
-                                  return [
-                                    PopupMenuItem(
-                                      child: ListTile(
-                                        leading: Icon(Icons.book),
-                                        title: Text('Books Borrowed'),
-                                      ),
-                                      onTap: () {
-                                        _showBooksDialog(borrower.id!);
-                                      },
-                                    ),
-                                  ];
-                                },
+                              child: Row(
+                                children: [
+                                  PopupMenuButton(
+                                    icon: Icon(Icons.more_horiz),
+                                    itemBuilder: (context) {
+                                      return [
+                                        PopupMenuItem(
+                                          value: 0,
+                                          child: Text("Sách đang mượn"),
+                                        ),
+                                      ];
+                                    },
+                                    onSelected: (value) {
+                                      if (value == 0) {
+                                        _showBooksDialog(context, borrower.id!);
+                                      }
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -226,6 +241,30 @@ class _BorrowerListWidgetState extends State<BorrowerListWidget> {
                       );
                     },
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 5, bottom: 10),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return BorrowerListScreen();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Xem chi tiết',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             );
