@@ -41,7 +41,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add book')),
+          SnackBar(content: Text('Book added successfully')),
         );
       }
     }

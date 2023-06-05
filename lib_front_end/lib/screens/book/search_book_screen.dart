@@ -282,7 +282,11 @@ class _SearchBookScreenState extends State<SearchBookScreen> {
               child: Row(
                 children: <Widget>[
                   Expanded(child: Text('ID')),
-                  Expanded(flex: 3, child: Text('Title')),
+                  Expanded(
+                      flex: 3,
+                      child: Text(
+                        'Title',
+                      )),
                   Expanded(flex: 2, child: Text('Author')),
                   Expanded(flex: 2, child: Text('Quantity')),
                   Expanded(flex: 1, child: Text('More')),
